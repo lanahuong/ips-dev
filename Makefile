@@ -17,8 +17,9 @@ $(TARGET) : $(OBJS)
 $(OBJDIR)%.o : $(SRCDIR)%.cpp $(SRCDIR)%.h
 	$(CC) -c -o $@ $<
 
+.PHONY : doc
 doc :
-	doxygen -g $(DOCDIR)Doxyfile
+	doxygen $(DOCDIR)Doxyfile
 
 .PHONY : clean
 clean :
