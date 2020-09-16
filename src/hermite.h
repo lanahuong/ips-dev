@@ -6,21 +6,13 @@
 #define PROJET_IPS1_HERMITE_H
 
 
-
 #include <armadillo>
 #include <vector>
 
-class Hermite{
+class Hermite {
 public:
-    Hermite(int);
-private :
-    int n_max;
+    static arma::mat ComputeMatrix(int, double, double, double);
 };
-
-
-
-
-
 
 
 #endif //PROJET_IPS1_HERMITE_H
