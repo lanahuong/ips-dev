@@ -1,21 +1,22 @@
 CC = g++ -std=c++11
+LD = $(CC)
 CFLAGS = -Wall -Wextra
-LDFLAGS =
+LDFLAGS = $(CFLAGS) -larmadillo
 BINDIR = bin/
 OBJDIR = obj/
 SRCDIR = src/
 DOCDIR = doc/
 TESTDIR = test/
 TARGET = $(BINDIR)solver
-OBJS = $(OBJDIR)main.o
+OBJS = $(OBJDIR)main.o $(OBJDIR)hermite.o
 
 all : $(TARGET)
 
 $(TARGET) : $(OBJS)
-	$(CC) -o $@ $^
+	$(LD) $(LDFLAGS) -o $@ $^
 
 $(OBJDIR)%.o : $(SRCDIR)%.cpp $(SRCDIR)%.h
-	$(CC) -c -o $@ $<
+	$(CC) $(CFLAGS) -c -o $@ $<
 
 .PHONY : doc
 doc :
