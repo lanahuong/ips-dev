@@ -49,15 +49,9 @@ tests : bin/main_tests
 #   make check  - makes everything and runs the built sample test.
 #   make clean  - removes all files genera	ted by make.
 
-# Points to the root of fused Google Test, relative to where this file is.
-
-
 # Paths to the fused gtest files.
 FUSED_GTEST_H = $(FUSED_GTEST_DIR)/gtest/gtest.h
 FUSED_GTEST_ALL_CC = $(FUSED_GTEST_DIR)/gtest/gtest-all.cc
-
-# Where to find the sample test.
-
 
 # Where to find gtest_main.cc.
 GTEST_MAIN_CC = $(GTEST)/googletest/src/gtest_main.cc
@@ -67,13 +61,11 @@ GTEST_MAIN_CC = $(GTEST)/googletest/src/gtest_main.cc
 # disable its use.
 CPPFLAGS += -I$(FUSED_GTEST_DIR) -DGTEST_HAS_PTHREAD=0
 
-
 # Flags passed to the C++ compiler.
 CXXFLAGS += -g
 
-
 check : all
-	./sample1_unittest
+	bin/main_tests
 
 $(FUSED_GTEST_H) :
 	$(GTEST)/googletest/scripts/fuse_gtest_files.py $(FUSED_GTEST_DIR)
@@ -85,7 +77,7 @@ obj/gtest-all.o : $(FUSED_GTEST_H) $(FUSED_GTEST_ALL_CC)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(FUSED_GTEST_DIR)/gtest/gtest-all.cc -o obj/gtest-all.o
 
 obj/gtest_main.o : $(FUSED_GTEST_H) $(GTEST_MAIN_CC)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(GTEST_MAIN_CC) -o obj/gtest_main.o
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(GTEST_MAIN_CC) -o $(OBJDIR)/gtest_main.o
 
-bin/main_tests : $(OBJS_WITHOUT_MAIN) obj/gtest-all.o obj/gtest_main.o
+bin/main_tests : $(OBJS_WITHOUT_MAIN) $(OBJDIR)/gtest-all.o $(OBJDIR)/gtest_main.o
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $^ -o $@
