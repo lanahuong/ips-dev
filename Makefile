@@ -9,7 +9,10 @@ DOCDIR = doc/
 TESTDIR = tests/
 TARGET = $(BINDIR)solver
 OBJS = $(OBJDIR)main.o $(OBJDIR)hermite.o
+
 OBJS_WITHOUT_MAIN = $(OBJDIR)hermite.o
+TEST_OBJS = $(OBJDIR)test1.o
+
 FUSED_GTEST_DIR = output
 GTEST = gtest
 
@@ -76,8 +79,11 @@ $(FUSED_GTEST_ALL_CC) :
 obj/gtest-all.o : $(FUSED_GTEST_H) $(FUSED_GTEST_ALL_CC)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(FUSED_GTEST_DIR)/gtest/gtest-all.cc -o obj/gtest-all.o
 
+$(OBJDIR)%.o : $(TESTDIR)%.cpp
+	$(CC) $(CFLAGS) -c -o $@ $< -I $(GTEST)/googletest/include
+
 obj/gtest_main.o : $(FUSED_GTEST_H) $(GTEST_MAIN_CC)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(GTEST_MAIN_CC) -o $(OBJDIR)gtest_main.o
 
-bin/main_tests : $(OBJS_WITHOUT_MAIN) $(OBJDIR)gtest-all.o $(OBJDIR)gtest_main.o
+bin/main_tests : $(OBJS_WITHOUT_MAIN) $(OBJDIR)gtest-all.o $(OBJDIR)gtest_main.o $(TEST_OBJS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $^ -o bin/main_tests
