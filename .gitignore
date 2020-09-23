@@ -1,9 +1,3 @@
-main
-bin/tests
-gtest/googletest/scripts/fuse_gtest_files.py
-obj/gtest_main.o
-obj/gtest-all.o
-obj/hermite.o
-obj/test1.o
-tmp/gtest/gtest-all.cc
-tmp/gtest/gtest.h
+bin
+obj
+tmp
