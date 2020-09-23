@@ -15,6 +15,8 @@ OBJDIR = obj
 SRCDIR = src
 DOCDIR = doc
 TEST_SRCDIR = tests
+FUSED_GTEST_TMP_DIR = tmp
+GTEST_SRC = gtest
 
 #Names of the targets
 TARGET = $(BINDIR)/solver
@@ -51,47 +53,46 @@ doc :
 	doxygen $(DOCDIR)Doxyfile
 
 
-FUSED_GTEST_H = $(FUSED_GTEST_DIR)/gtest/gtest.h
-FUSED_GTEST_ALL_CC = $(FUSED_GTEST_DIR)/gtest/gtest-all.cc
+FUSED_GTEST_H = $(FUSED_GTEST_TMP_DIR)/gtest/gtest.h
+FUSED_GTEST_ALL_CC = $(FUSED_GTEST_TMP_DIR)/gtest/gtest-all.cc
 GTEST_MAIN_CC = $(GTEST_SRC)/googletest/src/gtest_main.cc
-CPPFLAGS += -I$(FUSED_GTEST_DIR) -DGTEST_HAS_PTHREAD=0
+
+CPPFLAGS += -I$(FUSED_GTEST_TMP_DIR) -DGTEST_HAS_PTHREAD=0
 CXXFLAGS += -g
 
 TEST_SOURCES = $(addprefix $(TEST_SRCDIR)/, $(TEST_MODULES:=.cpp))
 TEST_OBJECTS = $(addprefix $(OBJDIR)/, $(TEST_MODULES:=.o))
-
-
-FUSED_GTEST_DIR = tmp
-GTEST_SRC = gtest
+ALL_TEST_OBJECTS = $(OBJECTS) $(OBJDIR)/gtest-all.o $(OBJDIR)/gtest_main.o $(TEST_OBJECTS)
 
 .PHONY : tests
-tests : $(TEST_TARGET)
+tests : makedirs $(TEST_TARGET)
 
-check : $(TEST_TARGET)
+check : makedirs $(TEST_TARGET)
 	$(TEST_TARGET)
 
+#GTEST special objects
 $(FUSED_GTEST_H) :
-	$(GTEST_SRC)/googletest/scripts/fuse_gtest_files.py $(FUSED_GTEST_DIR)
+	$(GTEST_SRC)/googletest/scripts/fuse_gtest_files.py $(FUSED_GTEST_TMP_DIR)
 
 $(FUSED_GTEST_ALL_CC) :
-	$(GTEST_SRC)/googletest/scripts/fuse_gtest_files.py $(FUSED_GTEST_DIR)
+	$(GTEST_SRC)/googletest/scripts/fuse_gtest_files.py $(FUSED_GTEST_TMP_DIR)
 
 $(OBJDIR)/gtest-all.o : $(FUSED_GTEST_H) $(FUSED_GTEST_ALL_CC)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(FUSED_GTEST_DIR)/gtest/gtest-all.cc -o $(OBJDIR)/gtest-all.o
-
-$(TEST_OBJECTS): $(OBJDIR)%.o : $(TEST_SRCDIR)%.cpp $(TEST_SOURCES)
-	$(CC) $(CFLAGS) -c -o $@ $< -I $(GTEST_SRC)/googletest/include
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(FUSED_GTEST_TMP_DIR)/gtest/gtest-all.cc -o $(OBJDIR)/gtest-all.o
 
 $(OBJDIR)/gtest_main.o : $(FUSED_GTEST_H) $(GTEST_MAIN_CC)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(GTEST_MAIN_CC) -o $(OBJDIR)/gtest_main.o
 
-$(TEST_TARGET) : $(OBJECTS) $(OBJDIR)/gtest-all.o $(OBJDIR)/gtest_main.o $(TEST_OBJECTS)
+$(TEST_OBJECTS): $(OBJDIR)%.o : $(TEST_SRCDIR)%.cpp $(TEST_SOURCES)
+	$(CC) $(CFLAGS) -c -o $@ $< -I $(GTEST_SRC)/googletest/include
+
+$(TEST_TARGET) : $(ALL_TEST_OBJECTS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $^ -o $(TEST_TARGET)
 
 
 .PHONY : clean
 clean :
-	rm -rf $(ALL_OBJECTS) $(TEST_OBJECTS) $(OBJDIR)/gtest_main.o $(OBJDIR)/gtest-all.o
+	rm -rf $(ALL_TEST_OBJECTS) $(ALL_OBJECTS)
 	rm -rf $(TARGET) $(TEST_TARGET)
-	rm -rf $(FUSED_GTEST_DIR)
+	rm -rf $(FUSED_GTEST_TMP_DIR)
 
