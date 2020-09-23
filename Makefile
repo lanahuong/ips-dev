@@ -1,7 +1,7 @@
 #Modules to consider in the build. foo.cpp will be foo.
 MODULES = hermite
 MAIN = main
-TEST_MODULES = test1
+TEST_MODULES = tests_hermite
 
 #Compiler config for the main target
 CC = g++ -std=c++11
@@ -57,8 +57,8 @@ FUSED_GTEST_H = $(FUSED_GTEST_TMP_DIR)/gtest/gtest.h
 FUSED_GTEST_ALL_CC = $(FUSED_GTEST_TMP_DIR)/gtest/gtest-all.cc
 GTEST_MAIN_CC = $(GTEST_SRC)/googletest/src/gtest_main.cc
 
-CPPFLAGS += -I$(FUSED_GTEST_TMP_DIR) -DGTEST_HAS_PTHREAD=0
-CXXFLAGS += -g
+CPPFLAGS += -I$(FUSED_GTEST_TMP_DIR) -DGTEST_HAS_PTHREAD=0 -larmadillo
+CXXFLAGS += -g -larmadillo
 
 TEST_SOURCES = $(addprefix $(TEST_SRCDIR)/, $(TEST_MODULES:=.cpp))
 TEST_OBJECTS = $(addprefix $(OBJDIR)/, $(TEST_MODULES:=.o))

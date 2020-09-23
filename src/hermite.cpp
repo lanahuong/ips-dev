@@ -6,10 +6,10 @@
 
 /**
  * Computes a matrix containing...
- * @param n_max an integer, n can be equal to 0
- * @param z_start
- * @param z_end
- * @param step
+ * @param n_max an integer, n can be equal to 0, must be positivs
+ * @param z_start double strictly smaller than z_end
+ * @param z_end double strictly greater than z_start
+ * @param step double strictly greater than zero
  * @return
  */
 arma::mat Hermite::ComputeMatrix(int n_max, double z_start, double z_end, double step) {
