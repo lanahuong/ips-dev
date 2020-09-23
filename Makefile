@@ -6,8 +6,8 @@ TEST_MODULES = tests_hermite
 #Compiler config for the main target
 CC = g++ -std=c++11
 LD = $(CC)
-CFLAGS = -Wall -Wextra
-LDFLAGS = $(CFLAGS) -larmadillo
+CFLAGS = -Wall -Wextra -I /usr/local/include -std=c++11
+LDFLAGS = -Wall -Wextra -std=c++11 -larmadillo
 
 #Folders config
 BINDIR = bin
@@ -57,8 +57,8 @@ FUSED_GTEST_H = $(FUSED_GTEST_TMP_DIR)/gtest/gtest.h
 FUSED_GTEST_ALL_CC = $(FUSED_GTEST_TMP_DIR)/gtest/gtest-all.cc
 GTEST_MAIN_CC = $(GTEST_SRC)/googletest/src/gtest_main.cc
 
-CPPFLAGS += -I$(FUSED_GTEST_TMP_DIR) -DGTEST_HAS_PTHREAD=0 -larmadillo
-CXXFLAGS += -g -larmadillo
+CPPFLAGS += -I$(FUSED_GTEST_TMP_DIR) -DGTEST_HAS_PTHREAD=0 
+CXXFLAGS += -g 
 
 TEST_SOURCES = $(addprefix $(TEST_SRCDIR)/, $(TEST_MODULES:=.cpp))
 TEST_OBJECTS = $(addprefix $(OBJDIR)/, $(TEST_MODULES:=.o))
@@ -78,16 +78,16 @@ $(FUSED_GTEST_ALL_CC) :
 	$(GTEST_SRC)/googletest/scripts/fuse_gtest_files.py $(FUSED_GTEST_TMP_DIR)
 
 $(OBJDIR)/gtest-all.o : $(FUSED_GTEST_H) $(FUSED_GTEST_ALL_CC)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(FUSED_GTEST_TMP_DIR)/gtest/gtest-all.cc -o $(OBJDIR)/gtest-all.o
+	$(CC) $(CPPFLAGS) $(CXXFLAGS) -c $(FUSED_GTEST_TMP_DIR)/gtest/gtest-all.cc -o $(OBJDIR)/gtest-all.o
 
 $(OBJDIR)/gtest_main.o : $(FUSED_GTEST_H) $(GTEST_MAIN_CC)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(GTEST_MAIN_CC) -o $(OBJDIR)/gtest_main.o
+	$(CC) $(CPPFLAGS) $(CXXFLAGS) -c $(GTEST_MAIN_CC) -o $(OBJDIR)/gtest_main.o
 
 $(TEST_OBJECTS): $(OBJDIR)%.o : $(TEST_SRCDIR)%.cpp $(TEST_SOURCES)
-	$(CC) $(CFLAGS) -c -o $@ $< -I $(GTEST_SRC)/googletest/include
+	$(CC) $(CPPFLAGS) -c -o $@ $< -I $(GTEST_SRC)/googletest/include
 
 $(TEST_TARGET) : $(ALL_TEST_OBJECTS)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $^ -o $(TEST_TARGET)
+	$(CC) $(CPPFLAGS) $(CXXFLAGS) $^ -o $(TEST_TARGET)
 
 
 .PHONY : clean
