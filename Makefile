@@ -6,69 +6,53 @@ BINDIR = bin/
 OBJDIR = obj/
 SRCDIR = src/
 DOCDIR = doc/
-TESTDIR = tests/
+
+
+MODULES = hermite
+
 TARGET = $(BINDIR)solver
-OBJS = $(OBJDIR)main.o $(OBJDIR)hermite.o
-
-OBJS_WITHOUT_MAIN = $(OBJDIR)hermite.o
-TEST_OBJS = $(OBJDIR)test1.o
-
-FUSED_GTEST_DIR = output
-GTEST = gtest
-
-
+MAIN_SRC = $(SRCDIR)main.cpp
+MAIN_OBJ = $(OBJDIR)main.o
+SOURCES = $(addprefix $(SRCDIR), $(MODULES:=.cpp))
+OBJECTS = $(addprefix $(OBJDIR), $(MODULES:=.o))
+ALL_OBJECTS = $(OBJECTS) $(MAIN_OBJ)
+ALL_SOURCES = $(SOURCES) $(MAIN_SRC)
 
 all : $(TARGET)
 
-$(TARGET) : $(OBJS)
-	$(LD) $(LDFLAGS) -o $@ $^
+$(TARGET) : $(ALL_OBJECTS) $(ALL_SOURCES)
+	$(LD) $(LDFLAGS) -o $@ $(ALL_OBJECTS)
 
-$(OBJDIR)%.o : $(SRCDIR)%.cpp $(SRCDIR)%.h
+$(MAIN_OBJ): obj/%.o : src/%.cpp $(MAIN_SRC)
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+$(OBJECTS): obj/%.o : src/%.cpp $(SOURCES)
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 .PHONY : doc
 doc :
 	doxygen $(DOCDIR)Doxyfile
 
-.PHONY : clean
-clean :
-	rm -rf $(OBJS)
-	rm -rf $(TARGET)
-	rm -rf $(FUSED_GTEST_DIR)
-
-
-
-.PHONY : tests
-tests : bin/main_tests
-
-
-
-# A Makefile for fusing Google Test and building a sample test against it.
-#
-# SYNOPSIS:
-#
-#   make [all]  - makes everything.
-#   make TARGET - makes the given target.
-#   make check  - makes everything and runs the built sample test.
-#   make clean  - removes all files genera	ted by make.
-
-# Paths to the fused gtest files.
 FUSED_GTEST_H = $(FUSED_GTEST_DIR)/gtest/gtest.h
 FUSED_GTEST_ALL_CC = $(FUSED_GTEST_DIR)/gtest/gtest-all.cc
-
-# Where to find gtest_main.cc.
 GTEST_MAIN_CC = $(GTEST)/googletest/src/gtest_main.cc
-
-# Flags passed to the preprocessor.
-# We have no idea here whether pthreads is available in the system, so
-# disable its use.
 CPPFLAGS += -I$(FUSED_GTEST_DIR) -DGTEST_HAS_PTHREAD=0
-
-# Flags passed to the C++ compiler.
 CXXFLAGS += -g
 
-check : bin/main_tests
-	bin/main_tests
+TEST_SRCDIR = tests/
+TEST_TARGET = $(BINDIR)tests
+TEST_MODULES = test1
+TEST_SOURCES = $(addprefix $(TEST_SRCDIR), $(TEST_MODULES:=.cpp))
+TEST_OBJECTS = $(addprefix $(OBJDIR), $(TEST_MODULES:=.o))
+
+FUSED_GTEST_DIR = output
+GTEST = gtest
+
+.PHONY : tests
+tests : $(TEST_TARGET)
+
+check : $(TEST_TARGET)
+	$(TEST_TARGET)
 
 $(FUSED_GTEST_H) :
 	$(GTEST)/googletest/scripts/fuse_gtest_files.py $(FUSED_GTEST_DIR)
@@ -79,11 +63,20 @@ $(FUSED_GTEST_ALL_CC) :
 obj/gtest-all.o : $(FUSED_GTEST_H) $(FUSED_GTEST_ALL_CC)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(FUSED_GTEST_DIR)/gtest/gtest-all.cc -o obj/gtest-all.o
 
-$(OBJDIR)%.o : $(TESTDIR)%.cpp
+$(TEST_OBJECTS): $(OBJDIR)%.o : $(TEST_SRCDIR)%.cpp $(TEST_SOURCES)
 	$(CC) $(CFLAGS) -c -o $@ $< -I $(GTEST)/googletest/include
+
 
 obj/gtest_main.o : $(FUSED_GTEST_H) $(GTEST_MAIN_CC)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(GTEST_MAIN_CC) -o $(OBJDIR)gtest_main.o
 
-bin/main_tests : $(OBJS_WITHOUT_MAIN) $(OBJDIR)gtest-all.o $(OBJDIR)gtest_main.o $(TEST_OBJS)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $^ -o bin/main_tests
+$(TEST_TARGET) : $(OBJECTS) $(OBJDIR)gtest-all.o $(OBJDIR)gtest_main.o $(TEST_OBJECTS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $^ -o $(TEST_TARGET)
+
+
+.PHONY : clean
+clean :
+	rm -rf $(ALL_OBJECTS) $(TEST_OBJECTS)
+	rm -rf $(TARGET) $(TEST_TARGET)
+	rm -rf $(FUSED_GTEST_DIR)
+
