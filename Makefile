@@ -64,7 +64,7 @@ CPPFLAGS += -I$(FUSED_GTEST_DIR) -DGTEST_HAS_PTHREAD=0
 # Flags passed to the C++ compiler.
 CXXFLAGS += -g
 
-check : all
+check : bin/main_tests
 	bin/main_tests
 
 $(FUSED_GTEST_H) :
@@ -77,7 +77,7 @@ obj/gtest-all.o : $(FUSED_GTEST_H) $(FUSED_GTEST_ALL_CC)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(FUSED_GTEST_DIR)/gtest/gtest-all.cc -o obj/gtest-all.o
 
 obj/gtest_main.o : $(FUSED_GTEST_H) $(GTEST_MAIN_CC)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(GTEST_MAIN_CC) -o $(OBJDIR)/gtest_main.o
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(GTEST_MAIN_CC) -o $(OBJDIR)gtest_main.o
 
-bin/main_tests : $(OBJS_WITHOUT_MAIN) $(OBJDIR)/gtest-all.o $(OBJDIR)/gtest_main.o
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $^ -o $@
+bin/main_tests : $(OBJS_WITHOUT_MAIN) $(OBJDIR)gtest-all.o $(OBJDIR)gtest_main.o
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $^ -o bin/main_tests
