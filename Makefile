@@ -9,6 +9,7 @@ DOCDIR = doc/
 TESTDIR = tests/
 TARGET = $(BINDIR)solver
 OBJS = $(OBJDIR)main.o $(OBJDIR)hermite.o
+OBJS_WITHOUT_MAIN = $(OBJDIR)hermite.o
 FUSED_GTEST_DIR = output
 GTEST = gtest
 
@@ -80,18 +81,11 @@ $(FUSED_GTEST_H) :
 $(FUSED_GTEST_ALL_CC) :
 	$(GTEST)/googletest/scripts/fuse_gtest_files.py $(FUSED_GTEST_DIR)
 
-gtest-all.o : $(FUSED_GTEST_H) $(FUSED_GTEST_ALL_CC)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(FUSED_GTEST_DIR)/gtest/gtest-all.cc
+obj/gtest-all.o : $(FUSED_GTEST_H) $(FUSED_GTEST_ALL_CC)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(FUSED_GTEST_DIR)/gtest/gtest-all.cc -o obj/gtest-all.o
 
-gtest_main.o : $(FUSED_GTEST_H) $(GTEST_MAIN_CC)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(GTEST_MAIN_CC)
+obj/gtest_main.o : $(FUSED_GTEST_H) $(GTEST_MAIN_CC)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(GTEST_MAIN_CC) -o obj/gtest_main.o
 
-obj/sample1.o : $(TESTDIR)/sample1.cc $(TESTDIR)/sample1.h
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(TESTDIR)/sample1.cc -o obj/sample1.o
-
-obj/sample1_unittest.o : $(TESTDIR)/sample1_unittest.cc \
-                     $(TESTDIR)/sample1.h $(FUSED_GTEST_H)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(TESTDIR)/sample1_unittest.cc -o obj/sample1_unittest.o
-
-bin/main_tests : obj/sample1.o obj/sample1_unittest.o gtest-all.o gtest_main.o
+bin/main_tests : $(OBJS_WITHOUT_MAIN) obj/gtest-all.o obj/gtest_main.o
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $^ -o $@
