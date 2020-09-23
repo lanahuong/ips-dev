@@ -9,10 +9,11 @@ DOCDIR = doc/
 TESTDIR = test/
 TARGET = $(BINDIR)solver
 OBJS = $(OBJDIR)main.o $(OBJDIR)hermite.o
+GTEST_DIR = tests/gtest_build
 
 all : $(TARGET)
 
-$(TARGET) : $(OBJS)
+$(TARGET) : $(OBJS)mkdir
 	$(LD) $(LDFLAGS) -o $@ $^
 
 $(OBJDIR)%.o : $(SRCDIR)%.cpp $(SRCDIR)%.h
@@ -26,3 +27,9 @@ doc :
 clean :
 	rm -rf $(OBJS)
 	rm -rf $(TARGET)
+	rm -rf $(GTEST_DIR)
+
+
+.PHONY : tests
+tests :
+	(cd tests && mkdir -p gtest_build && cd gtest_build && cmake ../gtest && make)
