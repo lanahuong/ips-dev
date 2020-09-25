@@ -1,7 +1,7 @@
 #Modules to consider in the build. foo.cpp will be foo.
-MODULES = hermite
+MODULES = hermite solverschrodinger
 MAIN = main
-TEST_MODULES = tests_hermite
+TEST_MODULES = tests_hermite tests_solverschrodinger
 
 #Compiler config for the main target
 CC = g++ -std=c++11
