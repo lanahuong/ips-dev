@@ -9,6 +9,7 @@
 
 #include <armadillo>
 #include <vector>
+#include <cmath>
 #include "hermite.h"
 
 /**
