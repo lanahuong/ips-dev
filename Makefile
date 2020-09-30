@@ -50,7 +50,7 @@ $(OBJECTS): obj/%.o : src/%.cpp $(SOURCES)
 #Doxygen
 .PHONY : doc
 doc :
-	doxygen $(DOCDIR)Doxyfile
+	doxygen $(DOCDIR)/Doxyfile
 
 
 FUSED_GTEST_H = $(FUSED_GTEST_TMP_DIR)/gtest/gtest.h
@@ -95,4 +95,5 @@ clean :
 	rm -rf $(ALL_TEST_OBJECTS) $(ALL_OBJECTS)
 	rm -rf $(TARGET) $(TEST_TARGET)
 	rm -rf $(FUSED_GTEST_TMP_DIR)
+	rm -rf $(DOCDIR)/html
 
