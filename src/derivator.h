@@ -1,20 +1,19 @@
 #ifndef DERIVATOR_H
 #define DERIVATOR_H
+#include <armadillo>
 
 class Derivator
 {
     private :
-        arma::mat create_deriv_mat(int n, int m);
-        void derivate_twice(mat *M);
-        void add_column(mat *M);
-        void add_line(mat *M);
-        void fill(mat *M);
+        
+        arma::Mat<double> derivate_twice(arma::Mat<double> *M);
+        void correct_bounds(arma::Mat<double> *M);
 
 
     public :
-        arma::mat derivator(mat M, int nmax);
+        arma::Mat<double> derivator(arma::Mat<double> *M);
         
 
-}
+};
 
 #endif
