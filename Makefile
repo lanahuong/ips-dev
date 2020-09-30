@@ -6,8 +6,8 @@ TEST_MODULES = tests_hermite tests_solverschrodinger
 #Compiler config for the main target
 CC = g++ -std=c++11
 LD = $(CC)
-CFLAGS = -Wall -Wextra -I /usr/local/include -std=c++11
-LDFLAGS = -Wall -Wextra -std=c++11 -larmadillo
+CFLAGS = -Wall -Wextra -g -I /usr/local/include
+LDFLAGS = -Wall -Wextra -g -larmadillo
 
 #Folders config
 BINDIR = bin
@@ -57,7 +57,7 @@ FUSED_GTEST_H = $(FUSED_GTEST_TMP_DIR)/gtest/gtest.h
 FUSED_GTEST_ALL_CC = $(FUSED_GTEST_TMP_DIR)/gtest/gtest-all.cc
 GTEST_MAIN_CC = $(GTEST_SRC)/googletest/src/gtest_main.cc
 
-CPPFLAGS += -I$(FUSED_GTEST_TMP_DIR) -DGTEST_HAS_PTHREAD=0 
+CPPFLAGS += -I$(FUSED_GTEST_TMP_DIR) -larmadillo -DGTEST_HAS_PTHREAD=0 
 CXXFLAGS += -g 
 
 TEST_SOURCES = $(addprefix $(TEST_SRCDIR)/, $(TEST_MODULES:=.cpp))
