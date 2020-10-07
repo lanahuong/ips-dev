@@ -1,8 +1,9 @@
 #include "solverschrodinger.h"
 #include "derivator.h"
+#include "constants.h"
 
 /**
- * @param w angular frequency
+ * @param OMEGA angular frequency
  * @param m mass
  * @param zmin minimum z where to compute the function
  * @param zmax maximum z where to compute the function
@@ -10,27 +11,20 @@
  * @param step the step to subdivise the interval 
  * @return a matrix where enery vary with the row and z with the column
  */
-arma::mat SolverSchrodinger::solve1D(double w, double m, double zmin, double zmax,
-                                     int n, double step) {
-
+arma::mat SolverSchrodinger::solve1D(double zmin, double zmax, int n, double step) {
     // Compute the factor of the solution with n constant
-    arma::rowvec z = arma::regspace(zmin, step, zmax).t();
-
-    return SolverSchrodinger::solve1D(w, m, z, n);
+    arma::rowvec z = arma::regspace(zmin, step, zmax).as_row();
+    return SolverSchrodinger::solve1D(z, n);
 }
 
 /**
- * @param w angular frequency
+ * @param OMEGA angular frequency
  * @param m mass
  * @param z a vector of z values
  * @param n maximum energy level
  * @return a matrix where enery vary with the row and z with the column
  */
-arma::mat SolverSchrodinger::solve1D(double w, double m, const arma::rowvec &z, int n) {
-
-    // This should be defined in a macro
-    double h_bar = 1;
-
+arma::mat SolverSchrodinger::solve1D(const arma::rowvec &z, int n) {
     // Compute the factor of the solution with n constant
     arma::vec nwiseconst = arma::regspace(0, n);
     nwiseconst[0] = 1;
@@ -40,37 +34,30 @@ arma::mat SolverSchrodinger::solve1D(double w, double m, const arma::rowvec &z, 
     }
 
     nwiseconst = arma::pow(arma::sqrt(nwiseconst), -1);
-    nwiseconst = nwiseconst * sqrt(sqrt(m * w / (arma::datum::pi * h_bar)));
+    nwiseconst = nwiseconst * sqrt(sqrt(MASS * OMEGA / (arma::datum::pi * H_BAR)));
 
     // Compute the factor of the solution with n constant
     arma::rowvec zwiseconst = arma::square(z);
-    zwiseconst = zwiseconst * -1 * m * w / (2 * h_bar);
+    zwiseconst = zwiseconst * -1 * MASS * OMEGA / (2 * H_BAR);
     zwiseconst = arma::exp(zwiseconst);
 
     // Compute the final solution
     arma::mat result = nwiseconst * zwiseconst;
-
     arma::mat hermitePolynomes = Hermite::ComputeMatrix(n, z);
-
     result = result % hermitePolynomes;
-
     return result;
 }
 
-bool SolverSchrodinger::test1DSolution(double w, double m, const arma::rowvec &z, arma::mat phi) {
-
-    // This should be defined in a macro
-    double h_bar = 1;
-
+bool SolverSchrodinger::test1DSolution(const arma::rowvec &z, arma::mat phi) {
     // Compute second derivative of each function
-    arma::mat dzsecond = Derivator::derivator(phi);
+    arma::mat dzsecond = derivator::differeniate(phi);
 
     // Compute left member
-    arma::mat left = h_bar * h_bar * dzsecond / (2 * m);
-    left = left + (m / 2 * w * w * arma::square(z) % phi.cols(1, phi.n_cols - 2));
+    arma::mat left = H_BAR * H_BAR * dzsecond / (2 * MASS);
+    left = left + (MASS / 2 * OMEGA * OMEGA * arma::square(z) % phi.cols(1, phi.n_cols - 2));
 
     // Compute right member
-    arma::vec E = (arma::regspace(0, phi.n_rows - 1) + 1. / 2.) * h_bar * w;
+    arma::vec E = (arma::regspace(0, (double) phi.n_rows - 1) + 1. / 2.) * H_BAR * OMEGA;
     arma::mat right = E % phi.cols(1, phi.n_cols - 2);
 
     // TODO Check left == right

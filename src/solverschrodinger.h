@@ -24,18 +24,18 @@ public:
      * @brief Solve the equation between \a zmin and \a zmax with the step \a
      * step for energie levels from 0 to \a n in 1 dimension
      */
-    static arma::mat solve1D(double, double, double, double, int, double);
+    static arma::mat solve1D(double zmin, double zmax, int n, double step);
 
     /**
      * @brief Solve the equation between \a zmin and \a zmax with the step \a
      * step for energie levels from 0 to \a n in 1 dimension
      */
-    static arma::mat solve1D(double, double, const arma::rowvec &, int);
+    static arma::mat solve1D(const arma::rowvec &z, int n);
 
     /**
      * @brief Test the solution
      */
-    static bool test1DSolution(double, double, const arma::rowvec &, arma::mat);
+    static bool test1DSolution(const arma::rowvec &z, arma::mat phi);
 };
 
 

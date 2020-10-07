@@ -3,13 +3,14 @@
 
 #include <armadillo>
 
-class Derivator {
+class derivator {
 private :
-    static arma::Mat<double> derivate_twice(arma::Mat<double> M);
-    static arma::Mat<double> correct_bounds(arma::Mat<double> M);
+    static void derivateTwice(arma::Mat<double> &m);
+
+    static void correct_bounds(arma::Mat<double> &m);
 
 public :
-    static arma::Mat<double> derivator(arma::Mat<double> M);
+    static arma::Mat<double> differeniate(arma::Mat<double> m);
 
 };
 
