@@ -1,4 +1,5 @@
 #include "solverschrodinger.h"
+#include "derivator.h"
 
 /**
  * @param w angular frequency

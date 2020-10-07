@@ -1,5 +1,5 @@
 #Modules to consider in the build. foo.cpp will be foo.
-MODULES = hermite solverschrodinger
+MODULES = hermite solverschrodinger derivator
 MAIN = main
 TEST_MODULES = tests_hermite tests_solverschrodinger
 

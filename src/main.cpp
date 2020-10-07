@@ -6,7 +6,8 @@ int main(int argc, char** argv) {
 
   cout << "Hello world" << endl;
 
-  Hermite::ComputeMatrix(30, 0, 5, 0.1).print("The Matrix");
+  arma::vec z = arma::regspace(0,0.1, 10);
+  Hermite::ComputeMatrix(30, z).print("The Matrix");
 
   return 0;
 }

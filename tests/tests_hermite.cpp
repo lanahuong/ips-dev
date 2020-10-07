@@ -10,7 +10,7 @@ TEST(Hermite, ComputeMatrix)
 {
     mat mat_zero = mat(1, 1, fill::zeros);
     mat M;
-    /** Wrong order */
+    /** Wrong order
     M = Hermite::ComputeMatrix(-2, 1.0, 2.0, 0.01);
     ASSERT_TRUE(approx_equal(mat_zero, M, "absdiff", EPSILON)) << "Fail with non null matrix while n_max is neg";
 
@@ -19,7 +19,7 @@ TEST(Hermite, ComputeMatrix)
 
     M = Hermite::ComputeMatrix(10, 1.0, 2.0, 0);
     ASSERT_TRUE(approx_equal(mat_zero, M, "absdiff", EPSILON)) << "Fail with non null matrix while step is null";
-
+*/
     mat M_3_0_10_1_computed = Hermite::ComputeMatrix(3, 0, 10, 1);
     mat M_3_0_10_1_ref = {{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
                           {0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20},

@@ -12,15 +12,15 @@ find_package(GTest REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
 
 #MAIN
-add_executable(main src/hermite.cpp  src/main.cpp)
+add_executable(main src/hermite.cpp  src/main.cpp src/solverschrodinger.cpp src/derivator.cpp)
 target_link_libraries(main ${ARMADILLO_LIBRARIES})
 target_compile_options(main ${COMPILE_OPTIONS})
 
 #TESTS
-add_executable(tests tests/hermite_tests.cpp src/hermite.cpp)
-target_link_libraries(tests ${GTEST_LIBRARIES} pthread)
-target_link_libraries(tests ${ARMADILLO_LIBRARIES})
-target_compile_options(tests ${COMPILE_OPTIONS})
+#add_executable(tests tests/hermite_tests.cpp src/hermite.cpp)
+#target_link_libraries(tests ${GTEST_LIBRARIES} pthread)
+#target_link_libraries(tests ${ARMADILLO_LIBRARIES})
+#target_compile_options(tests ${COMPILE_OPTIONS})
 
 
 
