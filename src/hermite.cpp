@@ -6,7 +6,7 @@
  * @param z_start double strictly smaller than z_end
  * @return
  */
-arma::mat Hermite::ComputeMatrix(int n_max, const arma::vec z_start) {
+arma::mat Hermite::ComputeMatrix(int n_max, const arma::vec &z_start) {
     /**
      * If the parameters are nonsense the matrix (0) is returned
      */
@@ -19,5 +19,5 @@ arma::mat Hermite::ComputeMatrix(int n_max, const arma::vec z_start) {
             herm_out.row(i) = herm_out.row(1) % herm_out.row(i - 1) - 2 * (i - 1) * herm_out.row(i - 2);
         }
     }
-    return std::move(herm_out);
+    return herm_out;
 }

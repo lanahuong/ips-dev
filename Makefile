@@ -57,8 +57,7 @@ FUSED_GTEST_H = $(FUSED_GTEST_TMP_DIR)/gtest/gtest.h
 FUSED_GTEST_ALL_CC = $(FUSED_GTEST_TMP_DIR)/gtest/gtest-all.cc
 GTEST_MAIN_CC = $(GTEST_SRC)/googletest/src/gtest_main.cc
 
-CPPFLAGS += -I$(FUSED_GTEST_TMP_DIR) -larmadillo -DGTEST_HAS_PTHREAD=0 
-CXXFLAGS += -g 
+CPPFLAGS += -I$(FUSED_GTEST_TMP_DIR) -larmadillo -DGTEST_HAS_PTHREAD=0
 
 TEST_SOURCES = $(addprefix $(TEST_SRCDIR)/, $(TEST_MODULES:=.cpp))
 TEST_OBJECTS = $(addprefix $(OBJDIR)/, $(TEST_MODULES:=.o))

@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 import csv
-import numpy
 import sys
+
+import numpy
 
 
 def writer_factory(f):
