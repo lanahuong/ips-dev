@@ -10,8 +10,8 @@ arma::mat Hermite::ComputeMatrix(int n_max, arma::vec z_start) {
     /**
      * If the parameters are nonsense the matrix (0) is returned
      */
-    int n = z.size();
-    herm_out = arma::mat(n_max + 1, n, arma::fill::zeros);
+    int n = z_start.size();
+    arma::vec herm_out = arma::mat(n_max + 1, n, arma::fill::zeros);
     herm_out.row(0) = arma::vec(n, arma::fill::ones).t();
     if (n_max > 0) {
         herm_out.row(1) = 2 * z_start.t();
