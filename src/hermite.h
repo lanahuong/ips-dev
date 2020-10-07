@@ -11,7 +11,7 @@
 
 class Hermite {
 public:
-    static arma::mat ComputeMatrix(int, double, double, double);
+    static arma::mat ComputeMatrix(int, arma::vec);
 };
 
 
