@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.13)
 project(projet_ips1)
 set (CMAKE_CXX_STANDARD 11)
-set(COMPILE_OPTIONS PRIVATE -v -Wall -Wextra  -O3)
+set(COMPILE_OPTIONS PRIVATE -v -Wall -Wextra -O3 -Werror -pedantic -ansi)
 
 #Armadillo
 find_package(Armadillo REQUIRED)
