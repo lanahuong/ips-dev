@@ -11,6 +11,7 @@
 #include <vector>
 #include <cmath>
 #include "hermite.h"
+#include "derivator.h"
 
 /**
  * @class SolverSchrodinger
@@ -29,7 +30,12 @@ class SolverSchrodinger {
      * @brief Solve the equation between \a zmin and \a zmax with the step \a
      * step for energie levels from 0 to \a n in 1 dimension
      */
-    static arma::mat solve1D(double, double, arma::rowvec, int, double);
+    static arma::mat solve1D(double, double, arma::rowvec, int);
+
+    /**
+     * @brief Test the solution
+     */
+    static bool test1DSolution(double, double, arma::rowvec, arma::mat);
 };
 
 

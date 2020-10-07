@@ -13,9 +13,9 @@ arma::mat SolverSchrodinger::solve1D(double w, double m, double zmin, double zma
     int n, double step) {
 
   // Compute the factor of the solution with n constant
-  arma::rowvec z = arma::regspace(zmin,step,zmax).as_row();
+  arma::rowvec z = arma::regspace(zmin,step,zmax).t();
   
-  return solve1D(w, m, z, n);
+  return SolverSchrodinger::solve1D(w, m, z, n);
 }
   
 /**
@@ -55,4 +55,24 @@ arma::mat SolverSchrodinger::solve1D(double w, double m, arma::rowvec z,
   result = result % hermitePolynomes;
 
   return result;
+}
+
+bool SolverSchrodinger::test1DSolution(double w, double m, arma::rowvec z, arma::mat phi) {
+  
+  // This should be defined in a macro
+  double h_bar = 1;
+
+  // Compute second derivative of each function
+  arma::mat dzsecond = Derivator::derivator(phi);
+
+  // Compute left member
+  arma::mat left = h_bar * h_bar * dzsecond / (2*m);
+  left = left + (m/2 * w * w * arma::square(z) % phi.cols(1,phi.n_cols-2));
+
+  // Compute right member
+  arma::vec E = (arma::regspace(0,phi.n_rows-1) + 1/2 ) * h_bar * w;
+  arma::mat right = E % phi.cols(1,phi.n_cols-2);
+
+  // TODO Check left == right
+  return false;
 }
