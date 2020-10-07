@@ -12,6 +12,22 @@
 arma::mat SolverSchrodinger::solve1D(double w, double m, double zmin, double zmax,
     int n, double step) {
 
+  // Compute the factor of the solution with n constant
+  arma::rowvec z = arma::regspace(zmin,step,zmax).as_row();
+  
+  return solve1D(w, m, z, n);
+}
+  
+/**
+ * @param w angular frequency
+ * @param m mass
+ * @param z a vector of z values
+ * @param n maximum energy level
+ * @return a matrix where enery vary with the row and z with the column
+ */
+arma::mat SolverSchrodinger::solve1D(double w, double m, arma::rowvec z,
+    int n) {
+
   // This should be defined in a macro
   double h_bar = 1;
 
@@ -27,19 +43,16 @@ arma::mat SolverSchrodinger::solve1D(double w, double m, double zmin, double zma
   nwiseconst = nwiseconst * sqrt(sqrt(m * w / (arma::datum::pi * h_bar)));
 
   // Compute the factor of the solution with n constant
-  arma::rowvec zwiseconst = arma::regspace(zmin,step,zmax).as_row();
-  
-  zwiseconst = arma::square(zwiseconst);
+  arma::rowvec zwiseconst = arma::square(z);
   zwiseconst = zwiseconst * -1 * m * w / (2 * h_bar);
   zwiseconst = arma::exp(zwiseconst);
 
   // Compute the final solution
   arma::mat result = nwiseconst * zwiseconst;
 
-  arma::mat hermitePolynomes = Hermite::ComputeMatrix(n, zmin, zmax, step);
+  arma::mat hermitePolynomes = Hermite::ComputeMatrix(n, z);
 
   result = result % hermitePolynomes;
 
   return result;
 }
-  

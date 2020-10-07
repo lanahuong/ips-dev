@@ -20,10 +20,16 @@
 class SolverSchrodinger {
   public:
     /**
-     * @brief Solves the equation between \a zmin and \a zmax with the step \a
+     * @brief Solve the equation between \a zmin and \a zmax with the step \a
      * step for energie levels from 0 to \a n in 1 dimension
      */
     static arma::mat solve1D(double, double, double, double, int, double);
+
+    /**
+     * @brief Solve the equation between \a zmin and \a zmax with the step \a
+     * step for energie levels from 0 to \a n in 1 dimension
+     */
+    static arma::mat solve1D(double, double, arma::rowvec, int, double);
 };
 
 
