@@ -12,9 +12,9 @@ arma::mat derivate_twice(arma::Mat<double> M){
         M_n1.insert_cols(n-2,1);  //création de la matrice au rang z + h
 
         M_n_1.shed_col(n-1);
-        M_n_1.insert_cols(0,1);   //création de la matrice z-h
+        M_n_1.insert_cols(0,1);   //création de la matrice z - h
 
-        M = M_n1 + M_n_1 -2*M;
+        M = M_n1 + M_n_1 -2*M;      // dérivée seconde discrète
     }
     else{
         M = arma::zeros(size(M));
@@ -32,7 +32,8 @@ void correct_bounds(arma::Mat<double> *M){
 }
 
 
-void derivator(arma::Mat<double> *M){
-    (*M) = derivate_twice(*M);
-    correct_bounds(M);
+arma::mat derivator(arma::Mat<double> M){
+    M = derivate_twice(M);
+    correct_bounds(&M);
+    return M;
 }
