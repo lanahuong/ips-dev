@@ -3,7 +3,7 @@
 
 
 void derivator::derivateTwice(arma::Mat<double> &m) {
-    int n = m.n_cols;
+    arma::uword n = m.n_cols;
     arma::Mat<double> M_n1 = m;
     arma::Mat<double> M_n_1 = m;
     if (n > 2) {
@@ -21,10 +21,10 @@ void derivator::derivateTwice(arma::Mat<double> &m) {
 
 
 void derivator::correct_bounds(arma::Mat<double> &m) {
-    int n = (m).n_cols;
+    arma::uword n = m.n_cols;
     if (n > 2) {
-        (m).shed_col(0);
-        (m).shed_col(n - 2);
+        m.shed_col(0);
+        m.shed_col(n - 2);
     }
 }
 

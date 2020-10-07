@@ -6,8 +6,10 @@ TEST_MODULES = tests_hermite tests_solverschrodinger
 #Compiler config for the main target
 CC = g++ -std=c++11
 LD = $(CC)
-CFLAGS = -Wall -Wextra -g -I /usr/local/include
-LDFLAGS = -Wall -Wextra -g -larmadillo
+CFLAGS = -Wall -Wextra -g3 -I /usr/local/include
+#CFLAGS += -Wall -Wextra -Werror -pedantic -ansi -Wshadow -Wdouble-promotion -Wundef -fno-common -Wconversion -Wunused-parameter
+
+LDFLAGS = -Wall -Wextra -larmadillo
 
 #Folders config
 BINDIR = bin
