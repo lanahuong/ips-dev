@@ -11,7 +11,7 @@
  * @param step the step to subdivise the interval 
  * @return a matrix where enery vary with the row and z with the column
  */
-arma::mat solverSchrodinger::solve1D(double zmin, double zmax, int n) {
+arma::mat solverSchrodinger::solve1D(double zmin, double zmax, uint n) {
     // Compute the factor of the solution with n constant
     arma::rowvec z = arma::regspace(zmin, STEP, zmax).as_row();
     return solverSchrodinger::solve1D(z, n);
@@ -24,12 +24,12 @@ arma::mat solverSchrodinger::solve1D(double zmin, double zmax, int n) {
  * @param n maximum energy level
  * @return a matrix where enery vary with the row and z with the column
  */
-arma::mat solverSchrodinger::solve1D(const arma::rowvec &z, int n) {
+arma::mat solverSchrodinger::solve1D(const arma::rowvec &z, uint n) {
     // Compute the factor of the solution with n constant
     arma::vec nwiseconst = arma::regspace(0, n);
     nwiseconst[0] = 1;
 
-    for (int i = 1; i <= n; i++) {
+    for (uint i = 1; i <= n; i++) {
         nwiseconst[i] = nwiseconst[i] * nwiseconst[i - 1] * 2;
     }
 

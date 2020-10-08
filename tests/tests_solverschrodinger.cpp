@@ -19,9 +19,9 @@ struct solution_check {
     double zmin;
     double zmax;
     double step;
-    int n;
+    uint n;
     // expected number of rows in the resulting matrix
-    int length;
+    uint length;
 
     /**
      * @brief format when printing a solution_check object

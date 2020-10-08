@@ -4,14 +4,14 @@ using namespace std;
 
 int main() {
     double bound = 7;
-    int n = 3;
+    uint n = 3;
     arma::mat m = solverSchrodinger::solve1D(-bound, bound, n);
     m.print("The Matrix");
 
     auto *checker = new orthogonalityChecker();
 
-    for (int i = 0; i < HERM_QUADRA_N_MAX; i++) {
-        for (int j = 0; j < HERM_QUADRA_N_MAX; j++) {
+    for (uint i = 0; i < HERM_QUADRA_N_MAX; i++) {
+        for (uint j = 0; j < HERM_QUADRA_N_MAX; j++) {
             cout << "params: " << i << " " << j << "res: " << checker->checkFor(i, j) << '\n';
         }
     }
