@@ -1,9 +1,6 @@
-//
-// Created by michel on 08/10/2020.
-//
-
 #ifndef PROJET_IPS1_CHECK_ORTHOGONALITY_H
 #define PROJET_IPS1_CHECK_ORTHOGONALITY_H
+
 
 #include <armadillo>
 #include "constants.h"
@@ -18,7 +15,7 @@
  */
 class orthogonalityChecker {
 public:
-    orthogonalityChecker(int indexMax, int nQuadra);
+    explicit orthogonalityChecker(int indexMax = HERM_QUADRA_N_MAX, int nQuadra = HERM_QUADRA_N_MAX);
 
     double checkFor(int n, int m);
 
@@ -29,7 +26,6 @@ private:
     double getConstFactor(int i);
 
     double constArray[HERM_QUADRA_N_MAX + 1]{};
-    double alpha;
 
     double getWeight(int i);
 

@@ -1,14 +1,14 @@
-//
-// Created by michel on 08/10/2020.
-//
-
 #include "check_orthogonality.h"
 
 
+/**
+ * The maximum value for n and m is bound by the max degree of the polynomial we have
+ * @param maxIndex
+ * @param nquadra
+ */
 orthogonalityChecker::orthogonalityChecker(int maxIndex, int nquadra) {
-    this->indexMax = maxIndex;
+    this->indexMax = maxIndex < HERM_QUADRA_N_MAX ? maxIndex : HERM_QUADRA_N_MAX;
     this->nQuadra = nquadra < HERM_QUADRA_N_MAX ? nquadra : HERM_QUADRA_N_MAX;
-    this->alpha = MASS * OMEGA / H_BAR;
     this->hermite_matrix = hermite::computeMatrix(this->indexMax, getZvector());
 
     /** We initialize the cached values  */
@@ -21,12 +21,17 @@ orthogonalityChecker::orthogonalityChecker(int maxIndex, int nquadra) {
 }
 
 double orthogonalityChecker::checkFor(int n, int m) {
-    double constFactor = getConstFactor(n) * getConstFactor(m);
-    double sum = 0;
-    for (int i = 0; i < this->nQuadra; i++) {
-        sum += getWeight(i) * this->hermite_matrix.at(m, i) * this->hermite_matrix.at(n, i);
+    if (unlikely(n > indexMax || m > indexMax)) {
+        return std::numeric_limits<double>::quiet_NaN();
+    } else {
+        double constFactor = getConstFactor(n) * getConstFactor(m);
+        double sum = 0;
+        for (int i = 0; i < this->nQuadra; i++) {
+            sum += getWeight(i) * this->hermite_matrix.at(m, i) * this->hermite_matrix.at(n, i);
+        }
+        return sum * constFactor;
     }
-    return sum * constFactor;
+
 }
 
 
@@ -35,7 +40,7 @@ double orthogonalityChecker::checkFor(int n, int m) {
  * @return
  */
 arma::rowvec orthogonalityChecker::getZvector() {
-    return (this->hermite_quadra[this->nQuadra].row(0).as_row()) / (sqrt(this->alpha));
+    return (this->hermite_quadra[this->nQuadra].row(0).as_row()) / (sqrt(MASS * OMEGA / H_BAR));
 }
 
 /**
