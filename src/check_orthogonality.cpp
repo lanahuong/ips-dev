@@ -14,10 +14,9 @@ orthogonalityChecker::orthogonalityChecker(int maxIndex, int nquadra) {
     /** We initialize the cached values  */
     for (int i = 0; i <= this->indexMax; i++) {
         this->constArray[i] = -1;
-        this->factorialArray[i] = 0;
+        this->pseudoFactorials[i] = 0;
     }
-    this->factorialArray[0] = 1;
-    this->factorialArray[1] = 1;
+    this->pseudoFactorials[0] = 1;
 }
 
 
@@ -65,7 +64,7 @@ double orthogonalityChecker::getConstFactor(int i) {
         return this->constArray[i];
     } else {
         /** we compute it */
-        return this->constArray[i] = pow((MASS * OMEGA / (PI * H_BAR)), 0.25) * pow((double) factorial(i), -0.5) * pow(2, -i / 2.);
+        return this->constArray[i] = pow((MASS * OMEGA / (PI * H_BAR)), 0.25) * getPseudoFactorial(i);
     }
 }
 
@@ -75,18 +74,18 @@ double inline orthogonalityChecker::getWeight(int i) {
 }
 
 /**
- * Stupid factorial to improve
- * Its now improved
+ * Corresponds to the factor 1/sqrt(n!2**n), each time we multiply the previous
+ * number by 1/(sqrt 2n) so there's no overflow
  * @param n
  * @return
  */
-u_long orthogonalityChecker::factorial(int n) {
-    if (this->factorialArray[n] == 0) {
+double orthogonalityChecker::getPseudoFactorial(int n) {
+    if (this->pseudoFactorials[n] == 0) {
         for (int i = 1; i <= n; i++) {
-            if (this->factorialArray[i] == 0) {
-                this->factorialArray[i] = this->factorialArray[i - 1] * (u_long) i;
+            if (this->pseudoFactorials[i] == 0) {
+                this->pseudoFactorials[i] = this->pseudoFactorials[i - 1] * pow(2 * i, -0.5);
             }
         }
     }
-    return this->factorialArray[n];
+    return this->pseudoFactorials[n];
 }

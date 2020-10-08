@@ -13,7 +13,7 @@ int main() {
 
     for (int i = 0; i < HERM_QUADRA_N_MAX; i++) {
         for (int j = 0; j < HERM_QUADRA_N_MAX; j++) {
-            cout << "params: " << i << j << "res: " << checker->checkFor(i, j) << '\n';
+            cout << "params: " << i << " " << j << "res: " << checker->checkFor(i, j) << '\n';
         }
     }
     //free(checker);

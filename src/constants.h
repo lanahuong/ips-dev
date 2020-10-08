@@ -6,8 +6,8 @@
 #define H_BAR 1.0
 #define MASS 1.0
 #define OMEGA 1.0
-#define STEP 0.01
-#define PI 1.0
+#define STEP 0.001
+#define PI 3.14159 //<! needed to normalize the quadrature
 
 
 #endif

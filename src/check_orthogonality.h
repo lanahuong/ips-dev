@@ -50,17 +50,17 @@ private:
 
 
     /**
-     * Simple function to compute the factorial given a cache stored in factorialArray
+     * Simple function to compute the factorial factor given a cache stored in pseudoFactorials
      * so the factorials are only computed once
      * @param n
      * @return
      */
-    u_long factorial(int n);
+    double getPseudoFactorial(int n);
 
     /**
      * Holds the pre computed values
      */
-    u_long factorialArray[HERM_QUADRA_N_MAX + 1]{};
+    double pseudoFactorials[HERM_QUADRA_N_MAX + 1]{};
 
 
     /**
