@@ -65,7 +65,7 @@ double orthogonalityChecker::getConstFactor(int i) {
         return this->constArray[i];
     } else {
         /** we compute it */
-        return this->constArray[i] = pow((MASS * OMEGA / (PI * H_BAR)), 0.25) * pow((double) factorial(i), -0.5) * pow(2, -i);
+        return this->constArray[i] = pow((MASS * OMEGA / (PI * H_BAR)), 0.25) * pow((double) factorial(i), -0.5) * pow(2, -i / 2.);
     }
 }
 
@@ -77,7 +77,6 @@ double inline orthogonalityChecker::getWeight(int i) {
 /**
  * Stupid factorial to improve
  * Its now improved
- * //TODO remove that commentary
  * @param n
  * @return
  */
