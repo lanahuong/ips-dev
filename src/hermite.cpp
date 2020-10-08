@@ -11,7 +11,7 @@ arma::mat hermite::computeMatrix(int n_max, const arma::rowvec &zRowvec) {
      * If the parameters are nonsense the matrix (0) is returned
      */
     arma::uword rowLen = zRowvec.size();
-    auto nMax = static_cast<arma::uword>(n_max);
+    arma::uword nMax = static_cast<arma::uword>(n_max);
     arma::mat hermOut = arma::mat(nMax + 1, rowLen, arma::fill::zeros);
     hermOut.row(0) = arma::vec(rowLen, arma::fill::ones).t();
     if (n_max > 0) {

@@ -10,9 +10,14 @@ orthogonalityChecker::orthogonalityChecker(int maxIndex, int nquadra) {
     this->nQuadra = nquadra < HERM_QUADRA_N_MAX ? nquadra : HERM_QUADRA_N_MAX;
     this->alpha = MASS * OMEGA / H_BAR;
     this->hermite_matrix = hermite::computeMatrix(this->indexMax, getZvector());
+
+    /** We initialize the cached values  */
     for (int i = 0; i <= this->indexMax; i++) {
         this->constArray[i] = -1;
+        this->factorialArray[i] = 0;
     }
+    this->factorialArray[0] = 1;
+    this->factorialArray[1] = 1;
 }
 
 double orthogonalityChecker::checkFor(int n, int m) {
@@ -52,28 +57,22 @@ double orthogonalityChecker::getConstFactor(int i) {
  * @param i
  * @return
  */
-double orthogonalityChecker::getWeight(int i) {
+double inline orthogonalityChecker::getWeight(int i) {
     return this->hermite_quadra[this->nQuadra].at(1, (arma::uword) i);
 }
-
-/**
- * @param i the index of the root
- * @return
- */
-double orthogonalityChecker::getRoot(int i) {
-    return this->hermite_quadra[this->nQuadra].at(0, (arma::uword) i);
-}
-
 
 /**
  * Stupid factorial to improve
  * @param n
  * @return
  */
-u_long orthogonalityChecker::factorial(uint n) {
-    u_long factorial = 1;
-    for (u_long i = 1; i <= n; ++i) {
-        factorial *= i;
+u_long orthogonalityChecker::factorial(int n) {
+    if (this->factorialArray[n] == 0) {
+        for (int i = 1; i <= n; i++) {
+            if (this->factorialArray[i] == 0) {
+                this->factorialArray[i] = this->factorialArray[i - 1] * (u_long) i;
+            }
+        }
     }
-    return factorial;
+    return this->factorialArray[n];
 }

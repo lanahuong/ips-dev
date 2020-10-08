@@ -1,11 +1,11 @@
 #Modules to consider in the build. foo.cpp will be foo.
-MODULES = hermite solverschrodinger derivator
+MODULES = hermite solverschrodinger derivator check_orthogonality
 MAIN = main
 TEST_MODULES = tests_hermite tests_solverschrodinger
 
 #Compiler config for the main target
 CC = g++ -std=c++11
-LD = $(CC)
+LD = $(CC) -std=c++11
 CFLAGS = -Wall -Wextra -g3 -I /usr/local/include
 #CFLAGS += -Wall -Wextra -Werror -pedantic -ansi -Wshadow -Wdouble-promotion -Wundef -fno-common -Wconversion -Wunused-parameter
 
@@ -100,4 +100,4 @@ clean :
 
 
 coefs:
-	python3 scripts/generate_coefs_header.py 5 > src/hermite_coefs.h
+	python3 scripts/generate_coefs_header.py 10 > src/hermite_coefs.h

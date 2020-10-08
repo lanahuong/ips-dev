@@ -23,25 +23,24 @@ public:
     double checkFor(int n, int m);
 
 private:
-    arma::rowvec getZvector();
+    int indexMax;
+    int nQuadra;
 
     double getConstFactor(int i);
 
     double constArray[HERM_QUADRA_N_MAX + 1]{};
-    int indexMax;
-    int nQuadra;
     double alpha;
 
     double getWeight(int i);
 
-    double getRoot(int i);
+    u_long factorialArray[HERM_QUADRA_N_MAX + 1]{};
 
-    double getConst(int n, int m);
+    u_long factorial(int n);
 
     arma::mat hermite_matrix;
     arma::mat hermite_quadra[HERM_QUADRA_N_MAX + 1] = HERMITE_QUADRA_COEFS;
 
-    static u_long factorial(uint n);
+    arma::rowvec getZvector();
 };
 
 
