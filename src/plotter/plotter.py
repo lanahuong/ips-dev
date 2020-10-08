@@ -5,7 +5,7 @@ import matplotlib.pyplot as pp
 functions = []
 z = []
 
-with open('test.csv', newline='') as csvfile:
+with open('schrodinger_solutions.csv', newline='') as csvfile:
     funcreader = csv.reader(csvfile, delimiter=',', quoting=csv.QUOTE_NONNUMERIC)
     i = 0
     for row in funcreader:
