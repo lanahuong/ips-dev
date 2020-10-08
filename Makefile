@@ -100,4 +100,4 @@ clean :
 
 
 coefs:
-	python3 scripts/generate_coefs_header.py 20 > src/hermite_coefs.h
+	python3 scripts/generate_coefs_header.py 30 > src/hermite_coefs.h
