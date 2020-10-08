@@ -12,12 +12,12 @@ include_directories(${ARMADILLO_INCLUDE_DIRS})
 include_directories(gtest/googletest/include)
 
 #MAIN
-add_executable(main src/hermite.cpp  src/main.cpp src/solverschrodinger.cpp src/derivator.cpp)
+add_executable(main src/hermite.cpp src/main.cpp src/solverschrodinger.cpp src/derivator.cpp src/check_orthogonality.cpp src/check_orthogonality.h)
 target_link_libraries(main ${ARMADILLO_LIBRARIES})
 target_compile_options(main ${COMPILE_OPTIONS})
 
 #TESTS
-add_executable(tests src/hermite.cpp src/solverschrodinger.cpp src/derivator.cpp tests/tests_hermite.cpp tests/tests_solverschrodinger.cpp)
+add_executable(tests src/hermite.cpp src/solverschrodinger.cpp src/derivator.cpp tests/tests_hermite.cpp tests/tests_solverschrodinger.cpp tests/tests_orthogonality.cpp)
 target_link_libraries(tests ${GTEST_LIBRARIES} pthread)
 target_link_libraries(tests ${ARMADILLO_LIBRARIES})
 target_compile_options(tests ${COMPILE_OPTIONS})

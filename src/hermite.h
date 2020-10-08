@@ -1,17 +1,15 @@
-//
-// Created by migda on 16/09/2020.
-//
-
 #ifndef PROJET_IPS1_HERMITE_H
 #define PROJET_IPS1_HERMITE_H
 
+#define likely(x)       __builtin_expect((x),1)
+#define unlikely(x)     __builtin_expect((x),0)
 
 #include <armadillo>
 #include <vector>
 
-class Hermite {
+class hermite {
 public:
-    static arma::mat ComputeMatrix(int, const arma::rowvec &);
+    static arma::mat computeMatrix(int, const arma::rowvec &);
 };
 
 

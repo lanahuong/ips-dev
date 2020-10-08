@@ -48,7 +48,7 @@ public:
  */
 TEST_P(SolutionTest, solutionSize) {
     solution_check state = GetParam();
-    arma::mat result = SolverSchrodinger::solve1D(state.zmin, state.zmax, state.n, state.step);
+    arma::mat result = solverSchrodinger::solve1D(state.zmin, state.zmax, state.n);
 
     EXPECT_EQ(state.n + 1, result.n_rows);
     EXPECT_EQ(state.length, result.n_cols);

@@ -1,4 +1,5 @@
 #include "derivator.h"
+#include "hermite.h"
 #include <armadillo>
 
 
@@ -6,7 +7,7 @@ void derivator::derivateTwice(arma::Mat<double> &m) {
     arma::uword n = m.n_cols;
     arma::Mat<double> M_n1 = m;
     arma::Mat<double> M_n_1 = m;
-    if (n > 2) {
+    if (likely(n > 2)) {
         M_n1.shed_col(0);
         M_n1.insert_cols(n - 2, 1);  //création de la matrice au rang z + h
 
@@ -20,9 +21,9 @@ void derivator::derivateTwice(arma::Mat<double> &m) {
 }
 
 
-void derivator::correct_bounds(arma::Mat<double> &m) {
+void derivator::correctBounds(arma::Mat<double> &m) {
     arma::uword n = m.n_cols;
-    if (n > 2) {
+    if (likely(n > 2)) {
         m.shed_col(0);
         m.shed_col(n - 2);
     }
@@ -31,6 +32,6 @@ void derivator::correct_bounds(arma::Mat<double> &m) {
 
 arma::mat derivator::differeniate(arma::Mat<double> m) {
     derivateTwice(m);
-    correct_bounds(m);
+    correctBounds(m);
     return m;
 }

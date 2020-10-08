@@ -18,13 +18,13 @@
  *
  * This class solves the Schrodinger equation
  */
-class SolverSchrodinger {
+class solverSchrodinger {
 public:
     /**
      * @brief Solve the equation between \a zmin and \a zmax with the step \a
      * step for energie levels from 0 to \a n in 1 dimension
      */
-    static arma::mat solve1D(double zmin, double zmax, int n, double step);
+    static arma::mat solve1D(double zmin, double zmax, int n);
 
     /**
      * @brief Solve the equation between \a zmin and \a zmax with the step \a
