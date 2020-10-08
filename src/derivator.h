@@ -7,7 +7,7 @@ class derivator {
 private :
     static void derivateTwice(arma::Mat<double> &m);
 
-    static void correct_bounds(arma::Mat<double> &m);
+    static void correctBounds(arma::Mat<double> &m);
 
 public :
     static arma::Mat<double> differeniate(arma::Mat<double> m);

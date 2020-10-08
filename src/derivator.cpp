@@ -20,7 +20,7 @@ void derivator::derivateTwice(arma::Mat<double> &m) {
 }
 
 
-void derivator::correct_bounds(arma::Mat<double> &m) {
+void derivator::correctBounds(arma::Mat<double> &m) {
     arma::uword n = m.n_cols;
     if (n > 2) {
         m.shed_col(0);
@@ -31,6 +31,6 @@ void derivator::correct_bounds(arma::Mat<double> &m) {
 
 arma::mat derivator::differeniate(arma::Mat<double> m) {
     derivateTwice(m);
-    correct_bounds(m);
+    correctBounds(m);
     return m;
 }

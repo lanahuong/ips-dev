@@ -98,3 +98,6 @@ clean :
 	rm -rf $(FUSED_GTEST_TMP_DIR)
 	rm -rf $(DOCDIR)/html
 
+
+coefs:
+	python3 scripts/generate_coefs_header.py 5 > src/hermite_coefs.h

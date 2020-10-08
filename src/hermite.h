@@ -9,9 +9,9 @@
 #include <armadillo>
 #include <vector>
 
-class Hermite {
+class hermite {
 public:
-    static arma::mat ComputeMatrix(int, const arma::rowvec &);
+    static arma::mat computeMatrix(int, const arma::rowvec &);
 };
 
 
