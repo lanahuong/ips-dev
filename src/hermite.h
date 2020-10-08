@@ -9,7 +9,7 @@
 
 class hermite {
 public:
-    static arma::mat computeMatrix(int, const arma::rowvec &);
+    static arma::mat computeMatrix(uint nMax, const arma::rowvec &zRowvec);
 };
 
 

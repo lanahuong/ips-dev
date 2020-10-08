@@ -12,7 +12,7 @@ include_directories(${ARMADILLO_INCLUDE_DIRS})
 include_directories(gtest/googletest/include)
 
 #MAIN
-add_executable(main src/hermite.cpp src/main.cpp src/solverschrodinger.cpp src/derivator.cpp src/check_orthogonality.cpp src/check_orthogonality.h)
+add_executable(main src/hermite.cpp src/main.cpp src/solverschrodinger.cpp src/derivator.cpp src/check_orthogonality.cpp src/saver.cpp)
 target_link_libraries(main ${ARMADILLO_LIBRARIES})
 target_compile_options(main ${COMPILE_OPTIONS})
 

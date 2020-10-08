@@ -6,17 +6,11 @@
  * @param maxIndex
  * @param nquadra
  */
-orthogonalityChecker::orthogonalityChecker(int maxIndex, int nquadra) {
+orthogonalityChecker::orthogonalityChecker(uint maxIndex, uint nquadra) {
     this->indexMax = maxIndex < HERM_QUADRA_N_MAX ? maxIndex : HERM_QUADRA_N_MAX;
     this->nQuadra = nquadra < HERM_QUADRA_N_MAX ? nquadra : HERM_QUADRA_N_MAX;
     this->hermiteMatrix = hermite::computeMatrix(this->indexMax, getZvector());
-
-    /** We initialize the cached values  */
-    for (int i = 0; i <= this->indexMax; i++) {
-        this->constArray[i] = -1;
-        this->pseudoFactorials[i] = 0;
-    }
-    this->pseudoFactorials[0] = 1;
+    this->initPseudoFactorial();
 }
 
 
@@ -28,16 +22,12 @@ orthogonalityChecker::orthogonalityChecker(int maxIndex, int nquadra) {
  * @param m
  * @return nan if the values are out of bound
  */
-double orthogonalityChecker::checkFor(int n, int m) {
+double orthogonalityChecker::checkFor(uint n, uint m) {
     if (unlikely(n > indexMax || m > indexMax)) {
         return std::numeric_limits<double>::quiet_NaN();
     } else {
-        double constFactor = getConstFactor(n) * getConstFactor(m);
-        double sum = 0;
-        for (int i = 0; i < this->nQuadra; i++) {
-            sum += getWeight(i) * this->hermiteMatrix.at(m, i) * this->hermiteMatrix.at(n, i);
-        }
-        return sum * constFactor;
+        double constFactor = this->pseudoFactorials.at(n) * this->pseudoFactorials.at(m);
+        return accu(this->getWeightVector() % this->hermiteMatrix.row(m) % this->hermiteMatrix.row(n)) * constFactor;
     }
 }
 
@@ -52,25 +42,9 @@ arma::rowvec orthogonalityChecker::getZvector() {
     return (this->hermiteQuadra[this->nQuadra].row(0).as_row()) / (sqrt(MASS * OMEGA / H_BAR));
 }
 
-/**
- * Turns out that we have to compute a complex factor for each n or m.
- * This factor is strictly positive, so when on is missing we'll encode
- * that with a negative value.
- * @return
- */
-double orthogonalityChecker::getConstFactor(int i) {
-    if (this->constArray[i] >= 0) {
-        /** the factor was previously computed */
-        return this->constArray[i];
-    } else {
-        /** we compute it */
-        return this->constArray[i] = pow((MASS * OMEGA / (PI * H_BAR)), 0.25) * getPseudoFactorial(i);
-    }
-}
 
-
-double inline orthogonalityChecker::getWeight(int i) {
-    return this->hermiteQuadra[this->nQuadra].at(1, (arma::uword) i);
+arma::Row<double> inline orthogonalityChecker::getWeightVector() {
+    return this->hermiteQuadra[this->nQuadra].row(1);
 }
 
 /**
@@ -79,13 +53,10 @@ double inline orthogonalityChecker::getWeight(int i) {
  * @param n
  * @return
  */
-double orthogonalityChecker::getPseudoFactorial(int n) {
-    if (this->pseudoFactorials[n] == 0) {
-        for (int i = 1; i <= n; i++) {
-            if (this->pseudoFactorials[i] == 0) {
-                this->pseudoFactorials[i] = this->pseudoFactorials[i - 1] * pow(2 * i, -0.5);
-            }
-        }
+void orthogonalityChecker::initPseudoFactorial() {
+    this->pseudoFactorials = arma::rowvec(this->indexMax + 1, arma::fill::ones);
+    for (u_long i = 1; i <= this->indexMax; i++) {
+        this->pseudoFactorials.at(i) = this->pseudoFactorials.at(i - 1) * pow(static_cast<double>(2 * i), -0.5);
     }
-    return this->pseudoFactorials[n];
+    this->pseudoFactorials *= pow((MASS * OMEGA / (PI * H_BAR)), 0.25);
 }

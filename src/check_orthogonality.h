@@ -15,29 +15,16 @@
  */
 class orthogonalityChecker {
 public:
-    explicit orthogonalityChecker(int indexMax = HERM_QUADRA_N_MAX, int nQuadra = HERM_QUADRA_N_MAX);
+    explicit orthogonalityChecker(uint indexMax = HERM_QUADRA_N_MAX, uint nQuadra = HERM_QUADRA_N_MAX);
 
-    double checkFor(int n, int m);
+    double checkFor(uint n, uint m);
 
 private:
     /**
      * To hold the parameters
      */
-    int indexMax;
-    int nQuadra;
-
-    /**
-     * Returns the pre-evalued value (if exists)
-     * @param i the index of the value
-     * @return
-     */
-    double getConstFactor(int i);
-
-    /**
-     * To hold the pre-evalued values. At compile time we can safely assume the max size
-     * given n and m are bound by HERM_QUADRA_N_MAX (n in the lesson )
-     */
-    double constArray[HERM_QUADRA_N_MAX + 1]{};
+    uint indexMax;
+    uint nQuadra;
 
 
     /**
@@ -46,7 +33,7 @@ private:
      * @param i from the \omega_i
      * @return
      */
-    double getWeight(int i);
+    arma::Row<double> getWeightVector();
 
 
     /**
@@ -55,12 +42,12 @@ private:
      * @param n
      * @return
      */
-    double getPseudoFactorial(int n);
+    void initPseudoFactorial();
 
     /**
      * Holds the pre computed values
      */
-    double pseudoFactorials[HERM_QUADRA_N_MAX + 1]{};
+    arma::rowvec pseudoFactorials;
 
 
     /**
