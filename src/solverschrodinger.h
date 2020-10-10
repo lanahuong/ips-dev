@@ -18,7 +18,7 @@
  *
  * This class solves the Schrodinger equation
  */
-class solverSchrodinger {
+class SolverSchrodinger {
 public:
     /**
      * @brief Solve the equation between \a zmin and \a zmax with the step \a

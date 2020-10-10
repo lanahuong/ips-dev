@@ -28,4 +28,4 @@ class Saver {
 };
 
 
-#endif // !SOLVERSCHRODINGER_H
+#endif // !SAVER_H

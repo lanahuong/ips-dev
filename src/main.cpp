@@ -5,7 +5,7 @@ using namespace std;
 int main() {
     double bound = 7;
     uint n = 3;
-    arma::mat m = solverSchrodinger::solve1D(-bound, bound, n);
+    arma::mat m = SolverSchrodinger::solve1D(-bound, bound, n);
     m.print("The Matrix");
 
     auto *checker = new orthogonalityChecker();
