@@ -10,8 +10,8 @@
 #include <armadillo>
 #include <vector>
 #include <cmath>
-#include "hermite.h"
-#include "derivator.h"
+#include "Hermite.h"
+#include "Derivator.h"
 
 /**
  * @class SolverSchrodinger

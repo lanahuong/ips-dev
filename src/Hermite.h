@@ -7,7 +7,7 @@
 #include <armadillo>
 #include <vector>
 
-class hermite {
+class Hermite {
 public:
     static arma::mat computeMatrix(uint nMax, const arma::rowvec &zRowvec);
 };

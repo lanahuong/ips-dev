@@ -1,6 +1,6 @@
 // calc_test.cpp
 #include <gtest/gtest.h>
-#include "../src/hermite.h"
+#include "../src/Hermite.h"
 #include "../src/constants.h"
 
 

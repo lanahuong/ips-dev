@@ -2,9 +2,9 @@
 #define MAIN_H
 
 #include <iostream>
-#include "solverschrodinger.h"
-#include "check_orthogonality.h"
-#include "saver.h"
+#include "SolverSchrodinger.h"
+#include "OrthogonalityChecker.h"
+#include "Saver.h"
 
 
 #endif // !MAIN_H

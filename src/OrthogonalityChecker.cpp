@@ -1,4 +1,4 @@
-#include "check_orthogonality.h"
+#include "OrthogonalityChecker.h"
 
 
 /**
@@ -6,10 +6,10 @@
  * @param maxIndex
  * @param nquadra
  */
-orthogonalityChecker::orthogonalityChecker(uint maxIndex, uint nquadra) {
+OrthogonalityChecker::OrthogonalityChecker(uint maxIndex, uint nquadra) {
     this->indexMax = maxIndex < HERM_QUADRA_N_MAX ? maxIndex : HERM_QUADRA_N_MAX;
     this->nQuadra = nquadra < HERM_QUADRA_N_MAX ? nquadra : HERM_QUADRA_N_MAX;
-    this->hermiteMatrix = hermite::computeMatrix(this->indexMax, getZvector());
+    this->hermiteMatrix = Hermite::computeMatrix(this->indexMax, getZvector());
     this->initPseudoFactorial();
 }
 
@@ -22,7 +22,7 @@ orthogonalityChecker::orthogonalityChecker(uint maxIndex, uint nquadra) {
  * @param m
  * @return nan if the values are out of bound
  */
-double orthogonalityChecker::checkFor(uint n, uint m) {
+double OrthogonalityChecker::checkFor(uint n, uint m) {
     if (unlikely(n > indexMax || m > indexMax)) {
         return std::numeric_limits<double>::quiet_NaN();
     } else {
@@ -38,12 +38,12 @@ double orthogonalityChecker::checkFor(uint n, uint m) {
  * integration variable.
  * @return
  */
-arma::rowvec orthogonalityChecker::getZvector() {
+arma::rowvec OrthogonalityChecker::getZvector() {
     return (this->hermiteQuadra[this->nQuadra].row(0).as_row()) / (sqrt(MASS * OMEGA / H_BAR));
 }
 
 
-arma::Row<double> inline orthogonalityChecker::getWeightVector() {
+arma::Row<double> inline OrthogonalityChecker::getWeightVector() {
     return this->hermiteQuadra[this->nQuadra].row(1);
 }
 
@@ -53,7 +53,7 @@ arma::Row<double> inline orthogonalityChecker::getWeightVector() {
  * @param n
  * @return
  */
-void orthogonalityChecker::initPseudoFactorial() {
+void OrthogonalityChecker::initPseudoFactorial() {
     this->pseudoFactorials = arma::rowvec(this->indexMax + 1, arma::fill::ones);
     for (u_long i = 1; i <= this->indexMax; i++) {
         this->pseudoFactorials.at(i) = this->pseudoFactorials.at(i - 1) * pow(static_cast<double>(2 * i), -0.5);

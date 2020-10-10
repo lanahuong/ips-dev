@@ -1,21 +1,21 @@
-#ifndef PROJET_IPS1_CHECK_ORTHOGONALITY_H
-#define PROJET_IPS1_CHECK_ORTHOGONALITY_H
+#ifndef PROJET_IPS1_ORTHOGONALITYCHECKER_H
+#define PROJET_IPS1_ORTHOGONALITYCHECKER_H
 
 
 #include <armadillo>
 #include "constants.h"
-#include "hermite_coefs.h"
-#include "hermite.h"
-#include "solverschrodinger.h"
+#include "hermiteCoefs.h"
+#include "Hermite.h"
+#include "SolverSchrodinger.h"
 
 /**
  * Works with a memory thus needs to be initialised
  * @remark could be implemented more efficiently by dynamically
  * computing the values as needed.
  */
-class orthogonalityChecker {
+class OrthogonalityChecker {
 public:
-    explicit orthogonalityChecker(uint indexMax = HERM_QUADRA_N_MAX, uint nQuadra = HERM_QUADRA_N_MAX);
+    explicit OrthogonalityChecker(uint indexMax = HERM_QUADRA_N_MAX, uint nQuadra = HERM_QUADRA_N_MAX);
 
     double checkFor(uint n, uint m);
 
@@ -64,4 +64,4 @@ private:
 };
 
 
-#endif //PROJET_IPS1_CHECK_ORTHOGONALITY_H
+#endif //PROJET_IPS1_ORTHOGONALITYCHECKER_H

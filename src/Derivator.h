@@ -3,7 +3,7 @@
 
 #include <armadillo>
 
-class derivator {
+class Derivator {
 private :
     static void differentiateTwice(arma::Mat<double> &m);
 

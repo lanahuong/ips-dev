@@ -1,9 +1,9 @@
-#include "derivator.h"
-#include "hermite.h"
+#include "Derivator.h"
+#include "Hermite.h"
 #include <armadillo>
 
 
-void derivator::differentiateTwice(arma::Mat<double> &m) {
+void Derivator::differentiateTwice(arma::Mat<double> &m) {
     arma::uword n = m.n_cols;
     arma::Mat<double> M_n1 = m;
     arma::Mat<double> M_n_1 = m;
@@ -20,7 +20,7 @@ void derivator::differentiateTwice(arma::Mat<double> &m) {
 }
 
 
-void derivator::correctBounds(arma::Mat<double> &m) {
+void Derivator::correctBounds(arma::Mat<double> &m) {
     arma::uword n = m.n_cols;
     if (likely(n > 2)) {
         m.shed_col(0);
@@ -29,7 +29,7 @@ void derivator::correctBounds(arma::Mat<double> &m) {
 }
 
 
-arma::mat derivator::differeniate(arma::Mat<double> m) {
+arma::mat Derivator::differeniate(arma::Mat<double> m) {
     differentiateTwice(m);
     correctBounds(m);
     return m;

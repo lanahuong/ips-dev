@@ -12,7 +12,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include "hermite.h"
+#include "Hermite.h"
 
 /**
  * @class Saver

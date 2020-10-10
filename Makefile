@@ -1,7 +1,7 @@
 #Modules to consider in the build. foo.cpp will be foo.
-MODULES = hermite solverschrodinger derivator check_orthogonality saver
+MODULES = Hermite SolverSchrodinger Derivator OrthogonalityChecker Saver
 MAIN = main
-TEST_MODULES = tests_hermite tests_solverschrodinger
+TEST_MODULES = testsHermite testsSolverSchrodinger
 
 #Compiler config for the main target
 CC = g++ -std=c++11
@@ -100,4 +100,4 @@ clean :
 
 
 coefs:
-	python3 scripts/generate_coefs_header.py 300 > src/hermite_coefs.h
+	python3 scripts/generateHermiteCoefs.py 100 > src/hermiteCoefs.h

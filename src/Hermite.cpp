@@ -1,4 +1,4 @@
-#include "hermite.h"
+#include "Hermite.h"
 
 /**
  * Computes a matrix containing...
@@ -6,7 +6,7 @@
  * @param zRowvec double strictly smaller than z_end
  * @return
  */
-arma::mat hermite::computeMatrix(uint nMax, const arma::rowvec &zRowvec) {
+arma::mat Hermite::computeMatrix(uint nMax, const arma::rowvec &zRowvec) {
     /**
      * If the parameters are nonsense the matrix (0) is returned
      */

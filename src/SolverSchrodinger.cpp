@@ -1,5 +1,5 @@
-#include "solverschrodinger.h"
-#include "derivator.h"
+#include "SolverSchrodinger.h"
+#include "Derivator.h"
 #include "constants.h"
 
 /**
@@ -43,14 +43,14 @@ arma::mat SolverSchrodinger::solve1D(const arma::rowvec &z, uint n) {
 
     // Compute the final solution
     arma::mat result = nwiseconst * zwiseconst;
-    arma::mat hermitePolynomes = hermite::computeMatrix(n, z);
+    arma::mat hermitePolynomes = Hermite::computeMatrix(n, z);
     result = result % hermitePolynomes;
     return result;
 }
 
 bool SolverSchrodinger::test1DSolution(const arma::rowvec &z, arma::mat phi) {
     // Compute second derivative of each function
-    arma::mat dzsecond = derivator::differeniate(phi);
+    arma::mat dzsecond = Derivator::differeniate(phi);
 
     // Compute left member
     arma::mat left = H_BAR * H_BAR * dzsecond / (2 * MASS);

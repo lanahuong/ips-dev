@@ -8,7 +8,7 @@ int main() {
     arma::mat m = SolverSchrodinger::solve1D(-bound, bound, n);
     m.print("The Matrix");
 
-    auto *checker = new orthogonalityChecker();
+    auto *checker = new OrthogonalityChecker();
 
     for (uint i = 0; i < HERM_QUADRA_N_MAX; i++) {
         for (uint j = 0; j < HERM_QUADRA_N_MAX; j++) {
