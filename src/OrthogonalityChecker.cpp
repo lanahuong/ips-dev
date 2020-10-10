@@ -8,7 +8,7 @@
  */
 OrthogonalityChecker::OrthogonalityChecker(uint maxIndex, uint nquadra) {
     this->indexMax = maxIndex < HERM_QUADRA_N_MAX ? maxIndex : HERM_QUADRA_N_MAX;
-    this->nQuadra = nquadra < HERM_QUADRA_N_MAX ? nquadra : HERM_QUADRA_N_MAX;
+    this->nQuadra = nquadra;
     this->hermiteMatrix = Hermite::computeMatrix(this->indexMax, getZvector());
     this->initPseudoFactorial();
 }
@@ -23,7 +23,7 @@ OrthogonalityChecker::OrthogonalityChecker(uint maxIndex, uint nquadra) {
  * @return nan if the values are out of bound
  */
 double OrthogonalityChecker::checkFor(uint n, uint m) {
-    if (unlikely(n > indexMax || m > indexMax)) {
+    if (unlikely(n > indexMax || m > indexMax || n + m > (2 * nQuadra) - 1)) {
         return std::numeric_limits<double>::quiet_NaN();
     } else {
         double constFactor = this->pseudoFactorials.at(n) * this->pseudoFactorials.at(m);

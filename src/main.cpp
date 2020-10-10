@@ -15,7 +15,7 @@ int main() {
             cout << "params: " << i << " " << j << "res: " << checker->checkFor(i, j) << '\n';
         }
     }
-    //free(checker);
+    free(checker);
 
 
     arma::rowvec z = arma::regspace(-bound, STEP, bound).as_row();
