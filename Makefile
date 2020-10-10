@@ -6,7 +6,7 @@ TEST_MODULES = tests_hermite tests_solverschrodinger
 #Compiler config for the main target
 CC = g++ -std=c++11
 LD = $(CC) -std=c++11
-CFLAGS = -Wall -Wextra -O3 -I /usr/local/include
+CFLAGS = -Wall -Wextra -O2 -I /usr/local/include
 #CFLAGS += -Wall -Wextra -Werror -pedantic -ansi -Wshadow -Wdouble-promotion -Wundef -fno-common -Wconversion -Wunused-parameter
 
 LDFLAGS = -Wall -Wextra -larmadillo
@@ -36,6 +36,7 @@ MAIN_SRC = $(addprefix $(SRCDIR)/, $(MAIN:=.cpp))
 MAIN_OBJ = $(addprefix $(OBJDIR)/, $(MAIN:=.o))
 SOURCES = $(addprefix $(SRCDIR)/, $(MODULES:=.cpp))
 OBJECTS = $(addprefix $(OBJDIR)/, $(MODULES:=.o))
+HEADERS =
 ALL_OBJECTS = $(OBJECTS) $(MAIN_OBJ)
 ALL_SOURCES = $(SOURCES) $(MAIN_SRC)
 
@@ -59,7 +60,7 @@ FUSED_GTEST_H = $(FUSED_GTEST_TMP_DIR)/gtest/gtest.h
 FUSED_GTEST_ALL_CC = $(FUSED_GTEST_TMP_DIR)/gtest/gtest-all.cc
 GTEST_MAIN_CC = $(GTEST_SRC)/googletest/src/gtest_main.cc
 
-CPPFLAGS += -I$(FUSED_GTEST_TMP_DIR) -larmadillo -DGTEST_HAS_PTHREAD=0
+TEST_CFLAGS += $(CFLAGS) -I$(FUSED_GTEST_TMP_DIR) -larmadillo -DGTEST_HAS_PTHREAD=0
 
 TEST_SOURCES = $(addprefix $(TEST_SRCDIR)/, $(TEST_MODULES:=.cpp))
 TEST_OBJECTS = $(addprefix $(OBJDIR)/, $(TEST_MODULES:=.o))
@@ -79,17 +80,16 @@ $(FUSED_GTEST_ALL_CC) :
 	$(GTEST_SRC)/googletest/scripts/fuse_gtest_files.py $(FUSED_GTEST_TMP_DIR)
 
 $(OBJDIR)/gtest-all.o : $(FUSED_GTEST_H) $(FUSED_GTEST_ALL_CC)
-	$(CC) $(CPPFLAGS) $(CXXFLAGS) -c $(FUSED_GTEST_TMP_DIR)/gtest/gtest-all.cc -o $(OBJDIR)/gtest-all.o
+	$(CC) $(TEST_CFLAGS) -c $(FUSED_GTEST_TMP_DIR)/gtest/gtest-all.cc -o $(OBJDIR)/gtest-all.o
 
 $(OBJDIR)/gtest_main.o : $(FUSED_GTEST_H) $(GTEST_MAIN_CC)
-	$(CC) $(CPPFLAGS) $(CXXFLAGS) -c $(GTEST_MAIN_CC) -o $(OBJDIR)/gtest_main.o
+	$(CC) $(TEST_CFLAGS) -c $(GTEST_MAIN_CC) -o $(OBJDIR)/gtest_main.o
 
 $(TEST_OBJECTS): $(OBJDIR)%.o : $(TEST_SRCDIR)%.cpp $(TEST_SOURCES)
-	$(CC) $(CPPFLAGS) -c -o $@ $< -I $(GTEST_SRC)/googletest/include
+	$(CC) $(TEST_CFLAGS) -c -o $@ $< -I $(GTEST_SRC)/googletest/include
 
 $(TEST_TARGET) : $(ALL_TEST_OBJECTS)
-	$(CC) $(CPPFLAGS) $(CXXFLAGS) $^ -o $(TEST_TARGET)
-
+	$(LD) $(TEST_CFLAGS) $^ -o $(TEST_TARGET)
 
 .PHONY : clean
 clean :
@@ -100,4 +100,4 @@ clean :
 
 
 coefs:
-	python3 scripts/generate_coefs_header.py 100 > src/hermite_coefs.h
+	python3 scripts/generate_coefs_header.py 300 > src/hermite_coefs.h

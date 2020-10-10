@@ -3,14 +3,13 @@
 #include <armadillo>
 
 
-void derivator::derivateTwice(arma::Mat<double> &m) {
+void derivator::differentiateTwice(arma::Mat<double> &m) {
     arma::uword n = m.n_cols;
     arma::Mat<double> M_n1 = m;
     arma::Mat<double> M_n_1 = m;
     if (likely(n > 2)) {
         M_n1.shed_col(0);
         M_n1.insert_cols(n - 2, 1);  //création de la matrice au rang z + h
-
         M_n_1.shed_col(n - 1);
         M_n_1.insert_cols(0, 1);   //création de la matrice z - h
 
@@ -31,7 +30,7 @@ void derivator::correctBounds(arma::Mat<double> &m) {
 
 
 arma::mat derivator::differeniate(arma::Mat<double> m) {
-    derivateTwice(m);
+    differentiateTwice(m);
     correctBounds(m);
     return m;
 }

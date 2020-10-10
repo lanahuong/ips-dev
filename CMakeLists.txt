@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.13)
 project(projet_ips1)
 set(CMAKE_CXX_STANDARD 11)
-set(COMPILE_OPTIONS PRIVATE -Wall -Wextra -Werror -pedantic -ansi -Wshadow -Wdouble-promotion -Wundef -fno-common -Wconversion -Wunused-parameter)
+set(COMPILE_OPTIONS PRIVATE -Wall -Wextra) #)-Werror -pedantic -ansi -Wshadow -Wdouble-promotion -Wundef -fno-common -Wconversion -Wunused-parameter)
 
 #Armadillo
 find_package(Armadillo REQUIRED)
