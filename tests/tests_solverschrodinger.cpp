@@ -9,16 +9,14 @@
 #include <vector>
 
 #include "../src/solverschrodinger.h"
+#include "../src/constants.h"
 
 /**
  * @struct define the parameter of SolutionTest
  */
 struct solution_check {
-    double w;
-    double m;
     double zmin;
     double zmax;
-    double step;
     uint n;
     // expected number of rows in the resulting matrix
     uint length;
@@ -27,8 +25,7 @@ struct solution_check {
      * @brief format when printing a solution_check object
      */
     friend std::ostream &operator<<(std::ostream &os, const solution_check &state) {
-        os << "{w=" << state.w << "; m=" << state.m;
-        os << "; zmin=" << state.zmin << "; zmax=" << state.zmax << "; step=" << state.step;
+        os << "; zmin=" << state.zmin << "; zmax=" << state.zmax;
         os << "; n=" << state.n << "; length=" << state.length << "}\n";
         return os;
     }
@@ -58,7 +55,7 @@ TEST_P(SolutionTest, solutionSize) {
  * Run all SolutionTest tests with given values
  */
 INSTANTIATE_TEST_SUITE_P(BasicCases, SolutionTest, testing::Values(
-        solution_check{1, 1, -1, 1, 1, 1, 3},
-        solution_check{1, 1, -10, 10, 1, 1, 21},
-        solution_check{1, 1, -1, 1, 0.1, 1, 21}
+        solution_check{-1, 1, 1, uint((2 / STEP) + 1)},
+        solution_check{-10, 10, 1, uint((20 / STEP) + 1)},
+        solution_check{-1, 1, 4, uint((2 / STEP) + 1)}
 ));
