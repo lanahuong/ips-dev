@@ -28,12 +28,12 @@ arma::mat SolverSchrodinger::solve1D(const arma::rowvec &z, uint n) {
     // Compute the factor of the solution with n constant
     arma::vec nwiseconst = arma::regspace(0, n);
     nwiseconst[0] = 1;
+    nwiseconst = arma::pow(arma::sqrt(nwiseconst), -1);
 
     for (uint i = 1; i <= n; i++) {
-        nwiseconst[i] = nwiseconst[i] * nwiseconst[i - 1] * 2;
+        nwiseconst[i] = nwiseconst[i] * nwiseconst[i - 1] / 2;
     }
 
-    nwiseconst = arma::pow(arma::sqrt(nwiseconst), -1);
     nwiseconst = nwiseconst * sqrt(sqrt(MASS * OMEGA / (arma::datum::pi * H_BAR)));
 
     // Compute the factor of the solution with n constant
