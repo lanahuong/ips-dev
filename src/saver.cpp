@@ -6,7 +6,7 @@
  */
 void Saver::saveToCSV(arma::rowvec z, arma::mat f) {
   // Namefile
-  std::string filename = "src/plotter/schrodinger_solutions.csv";
+  std::string filename = "tmp/schrodinger_solutions.csv";
 
   arma::mat z_and_functions = arma::mat(f.n_rows+1, f.n_cols);
   z_and_functions.row(0) = z;
