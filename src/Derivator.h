@@ -33,7 +33,8 @@ public :
      * @param m
      * @return
      */
-    static arma::Mat<double> differeniate(arma::Mat<double> m);
+    static arma::Mat<double> differentiate(arma::Mat<double> m);
+
 };
 
 #endif
