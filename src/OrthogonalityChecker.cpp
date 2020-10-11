@@ -7,9 +7,9 @@
  * @param nquadra
  */
 OrthogonalityChecker::OrthogonalityChecker(uint maxIndex, uint nquadra) {
-    this->indexMax = maxIndex < HERM_QUADRA_N_MAX ? maxIndex : HERM_QUADRA_N_MAX;
-    this->nQuadra = nquadra;
-    this->hermiteMatrix = Hermite::computeMatrix(this->indexMax, getZvector());
+    this->indexMax = maxIndex;
+    this->nQuadra = nquadra < HERM_QUADRA_N_MAX ? nquadra : HERM_QUADRA_N_MAX;
+    this->hermiteMatrix = Hermite::computeMatrix(this->indexMax + 1, getZvector());
     this->initPseudoFactorial();
 }
 
