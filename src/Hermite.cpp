@@ -1,11 +1,6 @@
 #include "Hermite.h"
 
-/**
- * Computes a matrix containing...
- * @param nMax an integer, n can be equal to 0, must be positive
- * @param zRowvec double strictly smaller than z_end
- * @return
- */
+
 arma::mat Hermite::computeMatrix(uint nMax, const arma::rowvec &zRowvec) {
     /**
      * If the parameters are nonsense the matrix (0) is returned

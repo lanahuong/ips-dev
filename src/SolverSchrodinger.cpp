@@ -3,12 +3,9 @@
 #include "constants.h"
 
 /**
- * @param OMEGA angular frequency
- * @param m mass
  * @param zmin minimum z where to compute the function
  * @param zmax maximum z where to compute the function
  * @param n maximum energy level
- * @param step the step to subdivise the interval 
  * @return a matrix where enery vary with the row and z with the column
  */
 arma::mat SolverSchrodinger::solve1D(double zmin, double zmax, uint n) {
@@ -18,11 +15,9 @@ arma::mat SolverSchrodinger::solve1D(double zmin, double zmax, uint n) {
 }
 
 /**
- * @param OMEGA angular frequency
- * @param m mass
  * @param z a vector of z values
  * @param n maximum energy level
- * @return a matrix where enery vary with the row and z with the column
+ * @return
  */
 arma::mat SolverSchrodinger::solve1D(const arma::rowvec &z, uint n) {
     // Compute the factor of the solution with n constant
@@ -48,6 +43,12 @@ arma::mat SolverSchrodinger::solve1D(const arma::rowvec &z, uint n) {
     return result;
 }
 
+/**
+ *
+ * @param z
+ * @param phi
+ * @return
+ */
 bool SolverSchrodinger::test1DSolution(const arma::rowvec &z, arma::mat phi) {
     // Compute second derivative of each function
     arma::mat dzsecond = Derivator::differeniate(phi);

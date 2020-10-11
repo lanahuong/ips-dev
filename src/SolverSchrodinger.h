@@ -1,5 +1,5 @@
 /**
- * @file solverschrodinger.h
+ * @file SolverSchrodinger.h
  *
  * This file contains the SolverSchrodinger class that computes the final
  * solution of the Schrodinger equation.

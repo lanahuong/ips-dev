@@ -1,3 +1,7 @@
+/**
+ * @file constants.h
+ */
+
 #ifndef PROJET_IPS1_CONSTANTS_H
 #define PROJET_IPS1_CONSTANTS_H
 
