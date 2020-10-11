@@ -17,8 +17,11 @@ int main() {
     }
     free(checker);
 
-
     arma::rowvec z = arma::regspace(-bound, STEP, bound).as_row();
+    bool test = SolverSchrodinger::test1DSolution(z, m);
+
+    cout << to_string(test);
+
     Saver::saveToCSV(z, m);
 
     return 0;

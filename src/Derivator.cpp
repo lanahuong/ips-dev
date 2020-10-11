@@ -29,7 +29,7 @@ void Derivator::correctBounds(arma::Mat<double> &m) {
 }
 
 
-arma::mat Derivator::differeniate(arma::Mat<double> m) {
+arma::mat Derivator::differentiate(arma::Mat<double> m) {
     differentiateTwice(m);
     correctBounds(m);
     return m;

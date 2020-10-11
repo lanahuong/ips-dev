@@ -1,5 +1,5 @@
 /**
- * @file saver.h
+ * @file Saver.h
  *
  * This file contains the Saver class that saves a function to CSV.
  */
