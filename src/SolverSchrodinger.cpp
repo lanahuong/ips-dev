@@ -60,6 +60,6 @@ bool SolverSchrodinger::test1DSolution(const arma::rowvec &z, arma::mat phi) {
     arma::vec E = (arma::regspace(0, (double) phi.n_rows - 1) + 1. / 2.) * H_BAR * OMEGA;
     arma::mat right = E % phi.cols(1, phi.n_cols - 2);
 
-    // TODO Check left == right
-    return false;
+
+    return approx_equal(left, right, "absdiff", EPSILON); // TODO Check left == right
 }
