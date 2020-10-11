@@ -54,14 +54,14 @@ bool SolverSchrodinger::test1DSolution(const arma::rowvec &z, arma::mat phi) {
     arma::mat dzsecond = Derivator::differentiate(phi);
 
     // z² in a matrix
-    arma::mat ztrunc = arma::vec(phi.n_rows, arma::fill::ones) * arma::square(z.cols(0,z.n_cols - 3));
-    
+    arma::mat ztrunc = arma::vec(phi.n_rows, arma::fill::ones) * arma::square(z.cols(1, z.n_cols - 2));
+
     // Truncate phi
     arma::mat phitrunc = phi.cols(1, phi.n_cols - 2);
 
     // Compute left member
-    arma::mat left = H_BAR * H_BAR * dzsecond / (2 * MASS);
-    left = left + (MASS * OMEGA * OMEGA / 2 * ztrunc % phitrunc);
+    arma::mat left = -H_BAR * H_BAR * dzsecond / (2. * MASS);
+    left = left + (MASS * OMEGA * OMEGA / 2.) * (ztrunc % phitrunc);
 
     // Compute right member
     arma::mat E = (arma::regspace(0, (double) phi.n_rows - 1) + 1. / 2.) * arma::rowvec(phitrunc.n_cols, arma::fill::ones) * H_BAR * OMEGA;

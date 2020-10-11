@@ -1,7 +1,7 @@
 #include "Derivator.h"
 #include "Hermite.h"
 #include <armadillo>
-
+#include "constants.h"
 
 void Derivator::differentiateTwice(arma::Mat<double> &m) {
     arma::uword n = m.n_cols;
@@ -13,7 +13,7 @@ void Derivator::differentiateTwice(arma::Mat<double> &m) {
         M_n_1.shed_col(n - 1);
         M_n_1.insert_cols(0, 1);   //création de la matrice z - h
 
-        m = M_n1 + M_n_1 - 2 * m;      // dérivée seconde discrète
+        m = (M_n1 + M_n_1 - 2 * m) / (STEP * STEP);      // dérivée seconde discrète
     } else {
         m = arma::zeros(size(m));
     }
