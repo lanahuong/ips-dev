@@ -1,3 +1,8 @@
+/**
+ * @file OrthogonalityChecker.h
+ * Contains the implementation of the OrthogonalityChecker
+ */
+
 #ifndef PROJET_IPS1_ORTHOGONALITYCHECKER_H
 #define PROJET_IPS1_ORTHOGONALITYCHECKER_H
 
@@ -9,6 +14,7 @@
 #include "SolverSchrodinger.h"
 
 /**
+ * @class OrthogonalityChecker
  * Works with a memory thus needs to be initialised
  * @remark could be implemented more efficiently by dynamically
  * computing the values as needed.
