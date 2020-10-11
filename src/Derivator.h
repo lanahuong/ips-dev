@@ -10,7 +10,7 @@ private :
     static void correctBounds(arma::Mat<double> &m);
 
 public :
-    static arma::Mat<double> differeniate(arma::Mat<double> m);
+    static arma::Mat<double> differentiate(arma::Mat<double> m);
 
 };
 

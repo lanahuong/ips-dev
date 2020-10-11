@@ -50,16 +50,23 @@ arma::mat SolverSchrodinger::solve1D(const arma::rowvec &z, uint n) {
 
 bool SolverSchrodinger::test1DSolution(const arma::rowvec &z, arma::mat phi) {
     // Compute second derivative of each function
-    arma::mat dzsecond = Derivator::differeniate(phi);
+    arma::mat dzsecond = Derivator::differentiate(phi);
+
+    // z² in a matrix
+    arma::mat ztrunc = arma::vec(phi.n_rows, arma::fill::ones) * arma::square(z.cols(0,z.n_cols - 3));
+    
+    // Truncate phi
+    arma::mat phitrunc = phi.cols(1, phi.n_cols - 2);
 
     // Compute left member
     arma::mat left = H_BAR * H_BAR * dzsecond / (2 * MASS);
-    left = left + (MASS / 2 * OMEGA * OMEGA * arma::square(z) % phi.cols(1, phi.n_cols - 2));
+    left = left + (MASS * OMEGA * OMEGA / 2 * ztrunc % phitrunc);
 
     // Compute right member
-    arma::vec E = (arma::regspace(0, (double) phi.n_rows - 1) + 1. / 2.) * H_BAR * OMEGA;
-    arma::mat right = E % phi.cols(1, phi.n_cols - 2);
+    arma::mat E = (arma::regspace(0, (double) phi.n_rows - 1) + 1. / 2.) * arma::rowvec(phitrunc.n_cols, arma::fill::ones) * H_BAR * OMEGA;
+    arma::mat right = E % phitrunc;
 
+    std::cout << left - right << std::endl;
 
-    return approx_equal(left, right, "absdiff", EPSILON); // TODO Check left == right
+    return approx_equal(left, right, "absdiff", EPSILON);
 }
