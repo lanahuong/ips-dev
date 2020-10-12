@@ -5,68 +5,57 @@
  */
 
 #include <gtest/gtest.h>
-#include <armadillo>
-#include <vector>
-#include <assert.h>
 
-#include "../src/derivator.h"
+#include "../src/Derivator.h"
+#include "../src/constants.h"
 
-/**
- * @struct define the parameter of SolutionTest
- */
-struct solution_check{
-    arma::Mat<double> M;
-    arma::Mat<double> res;
+using namespace arma;
 
-
-    friend std::ostream& operator<<(std::ostream& os, const solution_check& state) {
-        os << "{M = ";
-        arma.print(state.M);
-        return os;
-    }
-}
-
-/**
- * @class SolutionTest
- * This class defines parameterized tests using instances of solution_check as parameter
- */
-class SolutionTest : public testing::TestWithParam<solution_check> {
-  public:
-  SolutionTest() {};
-};
-
-/**
- * @brief Creates an instance of SolutionTest that will run the given test
- */
-TEST_P(SolutionTest, solutionSize) {
-  solution_check state = GetParam();
-  arma::mat result = Derivator::derivator(state.M);
-
-  ASSERT_EQ(arma::approx_equal(result,state.res),true)
-}
-
-arma::Mat<double> test1(){
-    arma::Mat<double> M = arma::zeros(5,6);
-    for (int i=1,5,i++){
-        for (int j=1,6,j++){
-            M(i,j) = i+j-1;
+mat test1(){
+    mat M = zeros(5,6);
+    for ( int i = 1 ; i <= 5 ; ++i){
+        for (int j = 1 ; j <= 6 ; ++j){
+            M(i-1,j-1) = i + j - 1;
         }
     }
     return M;
 }
 
-/* arma::Mat<double> test2(){
-    arma::Mat<double> M = arma::zeros(8,7);
-    for (int i=1,5,i++){
-        for (int j=1,6,j++){
-            M(i,j) = ;
+
+mat test2(){
+    mat M = zeros(8,7);
+    for (int i = 1 ; i <= 8 ; ++i){
+        for (int j = 1 ; j <= 7 ; ++j){
+            M(i-1,j-1) = pow((i*STEP +  j*STEP + 0.3),2);
         }
     }
     return M;
 }
-*/
-NSTANTIATE_TEST_SUITE_P(BasicCases, SolutionTest, testing::Values(
-      solution_check{test1(),arma::zeros(5,4))},
-     // solution_check{test2(),arma::},
-    ));
+
+
+TEST(Derivator, differentiate){
+    mat m0 = eye(3,2);
+    mat m1 = eye(1,1);
+    mat m2 = test1();
+    mat m3 = test2();
+    mat m4 = {{1, 2,     7,   2.5,  15,    1.45,  8},
+              {3, 8,     1.4, -12,  2.87,  4,     9},
+              {6, -1.2,  5,   7,    -22,   5.3,   1}};
+
+    mat m4_res = {{4,     -9.5,  17,    -26.05,   20.1},
+                  {-11.6, -6.8,  28.27, -13.74,   3.87},
+                  {13.4,  -4.2,  -31,   56.3,    -31.6}};
+
+    m4_res = m4_res / (STEP * STEP);
+
+    ASSERT_TRUE(approx_equal(Derivator::differentiate(m0), zeros(3,2),"absdiff",EPSILON));
+    ASSERT_TRUE(approx_equal(Derivator::differentiate(m1), zeros(1,1),"absdiff",EPSILON));
+    ASSERT_TRUE(approx_equal(Derivator::differentiate(m2), zeros(5,4),"absdiff",EPSILON));
+    ASSERT_TRUE(approx_equal(Derivator::differentiate(m3), 2 * ones(8,5),"absdiff",EPSILON));
+    ASSERT_TRUE(approx_equal(Derivator::differentiate(m4), m4_res,"absdiff",EPSILON));
+}
+
+
+
+
 
