@@ -21,6 +21,11 @@ else:
             i+=1
 
     for i in range(len(functions)):
-        pp.plot(z,functions[i])
+        lab = "n=" + str(i)
+        pp.plot(z,functions[i], label=lab)
 
+    pp.xlabel("z")
+    pp.ylabel("$\phi$")
+    pp.title("Solutions de l'équation de Schrodinger unidimensionnelle indépendante du temps")
+    pp.legend()
     pp.show()
