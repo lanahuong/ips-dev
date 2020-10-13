@@ -12,24 +12,32 @@ Unit tests and a good management of the git repository were also required.
 
 To build the whole project, go to the root of the project and run :
 
-```make```
+```
+make
+```
 
 To run the unit tests you can either, run `bin/tests` after building the whole
 project or run from the root :
 
-```make check```
+```
+make check
+```
 
 to build and run the tests
 
 To generate the documentation, run from the root :
 
-```make doc```
+```
+make doc
+```
 
 The documentation is then available in HTML format at `doc/html/index.html`.
 
 To get the solutions, run :
 
-```bin/solver```
+```
+bin/solver
+```
 
 The solutions are saved in CSV format in `tmp/schrodinger_solutions.csv`, you
 can copy it elsewhere to save the results otherwise they will be replaced when
@@ -38,13 +46,17 @@ you run the program again.
 You can then plot the solutions with the script `scripts/csv_plotter.py` by
 running :
 
-```scripts/csv_plotter.py path/to/solutions.csv```
+```
+scripts/csv_plotter.py path/to/solutions.csv
+```
 
 To have readable plots be careful not to plot to many curves.
 
 To clear the project build, run :
 
-```make clean```
+```
+make clean
+```
 
 ## Change the conditions
 

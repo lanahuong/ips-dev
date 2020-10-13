@@ -6,7 +6,7 @@
  * @param zmin minimum z where to compute the function
  * @param zmax maximum z where to compute the function
  * @param n maximum energy level
- * @return a matrix where enery vary with the row and z with the column
+ * @return a matrix of solutions where enery vary with the row and z with the column
  */
 arma::mat SolverSchrodinger::solve1D(double zmin, double zmax, uint n) {
     // Compute the factor of the solution with n constant
@@ -15,9 +15,9 @@ arma::mat SolverSchrodinger::solve1D(double zmin, double zmax, uint n) {
 }
 
 /**
- * @param z a vector of z values
+ * @param z the vector of z values where function were evaluated
  * @param n maximum energy level
- * @return
+ * @return a matrix of solutions where enery vary with the row and z with the column
  */
 arma::mat SolverSchrodinger::solve1D(const arma::rowvec &z, uint n) {
     // Compute the factor of the solution with n constant
@@ -45,9 +45,9 @@ arma::mat SolverSchrodinger::solve1D(const arma::rowvec &z, uint n) {
 
 /**
  *
- * @param z
- * @param phi
- * @return
+ * @param z the vector of z values where function were evaluated
+ * @param phi a matrix of functions
+ * @return true only if the functions in the matrix \a phi verify the equation
  */
 bool SolverSchrodinger::test1DSolution(const arma::rowvec &z, arma::mat phi) {
     // Compute second derivative of each function
@@ -66,8 +66,6 @@ bool SolverSchrodinger::test1DSolution(const arma::rowvec &z, arma::mat phi) {
     // Compute right member
     arma::mat E = (arma::regspace(0, (double) phi.n_rows - 1) + 1. / 2.) * arma::rowvec(phitrunc.n_cols, arma::fill::ones) * H_BAR * OMEGA;
     arma::mat right = E % phitrunc;
-
-    std::cout << left - right << std::endl;
 
     return approx_equal(left, right, "absdiff", EPSILON);
 }
