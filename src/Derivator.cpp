@@ -3,10 +3,10 @@
 #include <armadillo>
 #include "constants.h"
 
-void Derivator::differentiateTwice(arma::Mat<double> &m) {
+void Derivator::differentiateTwice(arma::mat &m) {
     arma::uword n = m.n_cols;
-    arma::Mat<double> M1 = m;
-    arma::Mat<double> M2 = m;
+    arma::mat M1 = m;
+    arma::mat M2 = m;
     /**
      * If the matrix is too small for the differentiation to make sense, 
      * a matrix of zeros of the same size is returned
@@ -24,7 +24,7 @@ void Derivator::differentiateTwice(arma::Mat<double> &m) {
 }
 
 
-void Derivator::correctBounds(arma::Mat<double> &m) {
+void Derivator::correctBounds(arma::mat &m) {
     arma::uword n = m.n_cols;
     if (likely(n > 2)) {
         m.shed_col(n - 1);
@@ -33,7 +33,7 @@ void Derivator::correctBounds(arma::Mat<double> &m) {
 }
 
 
-arma::mat Derivator::differentiate(arma::Mat<double> m) {
+arma::mat Derivator::differentiate(arma::mat m) {
     differentiateTwice(m);
     correctBounds(m);
     return m;
