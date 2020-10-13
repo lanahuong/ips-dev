@@ -35,85 +35,47 @@ Presentation template - N. Dubray - ENSIIE - 2020 - [:book:](../index.html)
 
 ---
 
-# `remark.js` ??? WTF ?
-
-* `remark.js` is a simple HTML5 + javascript presentation tool.
-
-  :arrow_right: to view your presentation, you only need a web browser (even offline).
-
-* the presentation description is written in **markdown** in the source file.
-
-  :arrow_right: the markdown code for this slide starts like this:
-
-```markdown
-# `remark.js` ??? WTF ?
-
-* `remark.js` is a simple HTML5 + javascript presentation tool.
-
-  :arrow_right: to view your presentation, you only need a web browser (even offline).
-
-
-
-```
-
-* some extensions allow to include code, `$\LaTeX$`, tables, diagrams, emojis...
-
----
-
-# :warning: important remark for firefox users
-
-Browsing a **local** `remark.js` presentation ?
-
-1. go to *`about:config`*,
-
-2. search for the *`origin_policy`* pattern,
-
-3. set the property *`security.fileuri.strict_origin_policy`* to *`false`*.
-
-.hcenter.shadow.w80.animated.fadeInUp.wait1s[
-![](images/firefox_config.png)
-]
-
+# 
 
 ---
 
 class: toc top
-# Example of a table of content
+# Table des matières
 
-1. First section
+1. Organisation du projet
 --
 
-  1. First subsection
+  1. Arboresence (Michel)
 --
 
-  2. Second subsection
+  2. Classes (Lana)
 --
 
-2. Second section
-  * First subsection
+2. Chaine de compilation (Michel)
+
 --
 
-2. Third section
-  1. First subsection
+3. Documentation (Lana)
+
+--
+
+4. Extraits de code et tests unitaires
+  1. Code (Gabriel)
+  2. Tests unitaires (Lana)
+
+--
+
+5. Git (Gabriel)
+
+--
+
+6. Résultats (Michel)
 
 ---
 
-# :clipboard: Example of table
+# Classes
 
-## A table
-.hcenter[
-| Points                  | `git` | `doxygen` | `VTK` | `python` | `gdb` | `MPI` | `$\LaTeX$` | `LAPACK` |
-|:------------------------|:-----:|:---------:|:-----:|:--------:|:-----:|:-----:|:------------:|:--------:|
-| *0*. What ?             |       |           |       |          |       |       |              |          |
-| *1*. I tried it once... |       |           |       |          |       |       |              |          |
-| *2*. I use it.          |       |           |  :+:  |          |  :+:  |       |              |          |
-| *3*. I love it !        |  :+:  |    :+:    |       |   :+:    |       |  :+:  |      :+:     |    :+:   |
-]
-
-.hcenter[Centered caption]
-
-## Some math
-`$$\int_0^\infty f(x)e^{-x} dx \simeq \sum_{i=0}^{n-1}w_if(x_i)$$`
+![](images/class-diagram.png)
 
 ---
 
