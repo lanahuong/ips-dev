@@ -61,7 +61,8 @@ class: toc top
 
 4. Extraits de code et tests unitaires
   1. Code (Gabriel)
-  2. Tests unitaires (Lana)
+  2. Quadrature (Michel)
+  3. Tests unitaires (Lana)
 
 --
 
@@ -71,305 +72,67 @@ class: toc top
 
 6. Résultats (Michel)
 
+
 ---
 
-# Classes
+ # 1 - Arborescence
+1. `src`
+2. `tests`
+3. `scripts`
+4. `doc`
+5. `gtest`
+
+
+---
+
+# 1 -  Classes
 
 ![](images/class-diagram.png)
 
----
-
-# How to include code ?
-
-
-
-* or use quotes (this is the **preferred way**, thanks to the syntax highlighting):
-
-```python
-import sys
-
-print("Hello !")
-```
-
-* or use spaces (no syntax highlighting):
-
-
-    > make clean
-    print("ECHO")
-
-* to display line numbers, use the `numbers` class:
-
-.numbers[
-```python
-#!/usr/bin/env python
-
-print("Hello from the best language !")
-
-```
-]
 
 ---
 
-class: middle
-# Example of an `asciinema` capture
+# 2 - Chaine de compilation
 
-.hcenter[
-<asciinema-player src="scripts/example.cast"></asciinema-player>
-]
 
-:arrow_right: record your shell sessions with
-
-```shell
-$ asciinema rec
-```
 
 ---
 
-# Want to include some emojis ? :joy:
+# 3 - Documentation
 
-**Yes you can** :exclamation: :smile: :grinning: :trollface:
 
-:arrow_right: It is quite easy ! :+1:
-
-Try not to over-use it :blue_heart: :star2: :musical_note: :v: :panda_face: :cool: !
 
 ---
 
-# Want to include some math ? (`$a=\frac{\sqrt{b^2}}{c}$`)
+# 4 - Code
 
-You can include some **inline math** like **`$\sum_aw_a=4$`**, or centered equations like
-`$$\sum_k\frac{1}{k^2}=\frac{\pi^2}{6}.$$`
-Let us suppose that
-`$$M\equiv\left[\begin{array}{ccc}1&0&0\\0&0&1\\0&1&0\end{array}\right],$$`
-one can check that
-`$$M \neq M^tM.$$`
 
-----
-
-Final expression for `$a(x)$`:
-`$$a(x) = \frac{A_0}{1 + x^2}+O\left(x^{-3}\right).$$`
 
 ---
+# 4 - Quadrature
 
-class: top
-# Want some item lists ?
 
-A simple item list :
-* first element
-* second element
-* third element
-* last element
-
-A simple *enumerated* list (with pauses between items):
-1. :melon: melon
---
-
-1. :apple: apple
---
-
-1. :banana: banana
---
-
-1. :grapes: grapes
-
-Take a look at the markdown source to see that an exact numbering is not needed :
-```
-1. :melon: melon
---
-
-1. :apple: apple
---
-
-1. :banana: banana
---
-
-1. :grapes: grapes
-
-```
 
 ---
+# 4 - Tests unitaires
 
-# Some tables / blocks ?
 
-.hcenter[
-| Example table           | `git` | `doxygen` | `VTK` | `python` | `gdb` | `MPI` | `$\LaTeX$` | `LAPACK` |
-|:------------------------|:-----:|:---------:|:-----:|:--------:|:-----:|:-----:|:------------:|:--------:|
-| *0*. What ?             |       |           |       |          |       |       |              |          |
-| *1*. I tried it once... |       |           |       |          |       |       |              |          |
-| *2*. I use it.          |       |           |  :+:  |          |  :+:  |       |              |          |
-| *3*. I love it !        |  :+:  |    :+:    |       |   :+:    |       |  :+:  |      :+:     |    :+:   |
-]
 
-.hcenter[This is a serious table.]
-.block[ Some text in a box, with some math: `$$a=b$$` ]
-some text
-.alert[ Some important text in a box, with some math: `$$\pi \simeq 3.1415926535$$` ]
 
 ---
+# 5 - Git
 
-class: middle
-
-# A chart with `mermaid.js`
-
-.mermaid[
-    sequenceDiagram
-        Alice->>+Bob: git clone
-        Bob-->>-Alice: cloning
-        Carol->>+Bob: git clone
-        Bob-->>-Carol: cloning
-				Note over Alice: commits
-				Note over Carol: commits
-				Alice->>+Bob: git push
-        Bob-->>-Alice: new HEAD
-				Carol->>+Bob: git push
-        Bob-->>-Carol: not OK
-]
 
 ---
-
-# Highlight some text / include images
-
-.noflex[
-.rightf.w20[
- ![](images/wikipedia_logo.png)
-]
-
-## Scientific method
-1. Define a question
-2. Gather information and resources (observe)
-3. Form an explanatory hypothesis
-4. Test the hypothesis by *performing an experiment* and collecting data in a **reproducible manner**
-5. Analyze the data
-6. Interpret the data and draw conclusions that serve as a starting point for new hypothesis
-7. **Publish results**
-8. Retest (frequently done **by other scientists**)
-]
-
----
-
-# How can I insert images ?
-
-.noflex[
-Use **`![](image.png)`**
-
-## Some justified text wrapping around a floating image:
-
-Lorem ipsum morbi taciti id adipiscing sed magna integer arcu eros nibh tortor interdum ultricies senectus accumsan, lacus suscipit a cursus pretium pellentesque est arcu blandit duis vivamus condimentum rhoncus molestie.
-
-.block.rightf.w20.animated.fadeInRight.wait1s[ ![](images/wikipedia_logo.png).hcenter[Wikipedia logo] ]
-
-Fames quisque volutpat lacus cursus semper varius erat habitant, luctus litora sed pulvinar himenaeos quis sit, vel fermentum taciti posuere fusce quisque tincidunt ut congue aliquam eget.
-
-.block.leftf.w30.animated.fadeInLeft.wait1s[
-Some text in a floating box... `$$\sum_i \hat{\pi}\left[u_i^2\right]=1$$`
-]
-
-`$$a=1+2+3+4+5+6+\ldots$$`
-Fames quisque volutpat lacus cursus semper varius erat habitant, luctus litora sed pulvinar himenaeos quis sit, vel fermentum taciti posuere fusce quisque tincidunt ut congue aliquam eget.
-Fames quisque volutpat lacus cursus semper varius erat habitant, luctus litora sed pulvinar himenaeos quis sit, vel fermentum taciti posuere fusce quisque tincidunt ut congue aliquam eget.
-Fames quisque volutpat lacus cursus semper varius erat habitant, luctus litora sed pulvinar himenaeos quis sit, vel fermentum taciti posuere fusce quisque tincidunt ut congue aliquam eget.
-]
-
----
-
-class: middle
-# Animate ?
-
-Yes, you can animate things.
-
-.block.animated.fadeInRight[
-* Here is a sliding *block of text*.
-* On two lines.
-]
-
-.animated.wait1s.fadeIn[Some text fading in...]
-
-.alert.animated.wait2s.fadeInLeft[Another block :v:
-`$$\int_0^1 x^2 dx = \left[ \frac{x^3}{3} \right]_0^1 $$`]
-
-.animated.wait3s.fadeIn[and...]
-
-.hcenter.block.animated.wait4s.fadeInUp[Some final text with some math :panda_face: !!! `$$a=b$$`]
-
----
-
-# some `git` graphs
-
-.row[
-.column.w30[
-This is a serious `git` graph made with `gitgraph.js`.
-]
-.column.w65[
-<canvas id='gitExample0'></canvas>
-]
-]
-
----
-
-class: hcenter, middle
-# Include a video
-
-<video controls="yes" data-setup="{}" height="auto" loop preload="auto" width="100%">
-<source src="videos/toto.webm" type="video/webm"/>
-</video>
-
----
-
-# Include a tree
-
-A tree ? really ?
-.alert.tree.hcenter[
-This
-* is a
-    * **tree**
-* like
-    * no
-        * other
-]
-
----
-
-# Plot with `Bokeh.js`
-
-<div class='hcenter' id='bokeh00'></div>
-
----
-
-# Another plot with `Bokeh.js`
-
-<div class='hcenter' id='bokeh01'></div>
-
----
-
-# Plot with `Plotly.js`
+# 6 - Résultats
 
 
-???
 
-:warning: BUG: due to a `scale()` rule in the CSS of `remark.js`, mouse coordinates in the plots are wrong.
 
----
 
-# Include `VTK` pipelines with [`vtk.js`](https://kitware.github.io/vtk-js/)
 
-<iframe height="500px" src="./vtk00.html" width="100%"></iframe>
 
----
 
-class: hcenter, middle
-# Conclusion
-
-**That's all folks !**
-
-Start playing with this by simply editing the source file.
-
-Did you try the presentation mode (by pressing **p**) ?
-
-You can also get some help by pressing **h**.
-
-???
-
-Holy :cow: !!! I can put notes on my slides !?!
 </textarea>
 
 <script src="core/javascript/remark.js"></script>
