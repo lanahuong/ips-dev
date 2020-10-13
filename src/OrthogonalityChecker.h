@@ -23,12 +23,12 @@ class OrthogonalityChecker {
   /**
    * Initializes a the functions to compute the Scalar product faster
    */
-  explicit OrthogonalityChecker (uint indexMax = HERM_QUADRA_N_MAX, uint nQuadra = HERM_QUADRA_N_MAX);
+  explicit OrthogonalityChecker(uint indexMax = HERM_QUADRA_N_MAX, uint nQuadra = HERM_QUADRA_N_MAX);
 
   /**
    * @brief Check wether two functions are orthogonal
    */
-  double checkFor (uint n, uint m);
+  double checkFor(uint n, uint m);
 
  private:
   /**
@@ -41,13 +41,13 @@ class OrthogonalityChecker {
    * @brief Get the weight from the values previously computed in python and included in the header
    * hermite_coefs.h
    */
-  arma::Row<double> getWeightVector ();
+  arma::Row<double> getWeightVector();
 
   /**
    * @brief Simple function to compute the pseudo factorials factor given a cache stored in pseudoFactorials
    * so the factorials are only computed once
    */
-  void initPseudoFactorial ();
+  void initPseudoFactorial();
 
   /**
    * Holds the pre computed values
@@ -67,7 +67,7 @@ class OrthogonalityChecker {
   /**
    * @brief Finds and computes the vector of Z used in Hermite::ComputeMatrix
    */
-  arma::rowvec getZvector ();
+  arma::rowvec getZvector();
 };
 
 #endif //PROJET_IPS1_ORTHOGONALITYCHECKER_H

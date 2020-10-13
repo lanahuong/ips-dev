@@ -32,7 +32,7 @@ class Hermite {
    * @param zRowvec input vector
    * @return an matrix where each row corresponds to a degree
    */
-  static arma::mat computeMatrix (uint nMax, const arma::rowvec &zRowvec);
+  static arma::mat computeMatrix(uint nMax, const arma::rowvec &zRowvec);
 };
 
 #endif //PROJET_IPS1_HERMITE_H
