@@ -20,12 +20,11 @@
  * This class saves a function to a CSV file
  */
 class Saver {
-  public:
-    /**
-     * @brief Save functions \a f to CSV
-     */
-    static void saveToCSV(arma::rowvec, arma::mat);
+ public:
+  /**
+   * @brief Save functions \a f to CSV
+   */
+  static void saveToCSV (arma::rowvec, arma::mat);
 };
-
 
 #endif // !SAVER_H

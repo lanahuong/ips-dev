@@ -1,15 +1,14 @@
-#Modules to consider in the build. foo.cpp will be foo.
-MODULES = Hermite SolverSchrodinger Derivator OrthogonalityChecker Saver
-MAIN = main
-TEST_MODULES = testsHermite testsSolverSchrodinger testsOrthogonalityChecker testsDerivator
-
 #Compiler config for the main target
 CC = g++ -std=c++11
 LD = $(CC) -std=c++11
 CFLAGS = -Wall -Wextra -O2 -I /usr/local/include
 #CFLAGS += -Wall -Wextra -Werror -pedantic -ansi -Wshadow -Wdouble-promotion -Wundef -fno-common -Wconversion -Wunused-parameter
-
+TEST_CFLAGS += $(CFLAGS) -I$(FUSED_GTEST_TMP_DIR) -larmadillo -Og -DGTEST_HAS_PTHREAD=0
 LDFLAGS = -Wall -Wextra -larmadillo
+
+#Modules to consider in the build. foo.cpp will be foo.
+include tests/modules
+include src/modules
 
 #Folders config
 BINDIR = bin
@@ -36,17 +35,17 @@ MAIN_SRC = $(addprefix $(SRCDIR)/, $(MAIN:=.cpp))
 MAIN_OBJ = $(addprefix $(OBJDIR)/, $(MAIN:=.o))
 SOURCES = $(addprefix $(SRCDIR)/, $(MODULES:=.cpp))
 OBJECTS = $(addprefix $(OBJDIR)/, $(MODULES:=.o))
-HEADERS =
 ALL_OBJECTS = $(OBJECTS) $(MAIN_OBJ)
+ALL_HEADERS = $(addprefix $(SRCDIR)/, $(ORPHANED_HEADERS:=.h))
 ALL_SOURCES = $(SOURCES) $(MAIN_SRC)
 
-$(TARGET) : $(ALL_OBJECTS) $(ALL_SOURCES)
+$(TARGET) : $(ALL_OBJECTS) $(ALL_SOURCES) $(ALL_HEADERS)
 	$(LD) $(LDFLAGS) -o $@ $(ALL_OBJECTS)
 
 $(MAIN_OBJ): obj/%.o : src/%.cpp $(MAIN_SRC)
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-$(OBJECTS): obj/%.o : src/%.cpp $(SOURCES)
+$(OBJECTS): obj/%.o : src/%.cpp $(SOURCES) $(ALL_HEADERS)
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 
@@ -59,9 +58,6 @@ doc :
 FUSED_GTEST_H = $(FUSED_GTEST_TMP_DIR)/gtest/gtest.h
 FUSED_GTEST_ALL_CC = $(FUSED_GTEST_TMP_DIR)/gtest/gtest-all.cc
 GTEST_MAIN_CC = $(GTEST_SRC)/googletest/src/gtest_main.cc
-
-TEST_CFLAGS += $(CFLAGS) -I$(FUSED_GTEST_TMP_DIR) -larmadillo -DGTEST_HAS_PTHREAD=0
-
 TEST_SOURCES = $(addprefix $(TEST_SRCDIR)/, $(TEST_MODULES:=.cpp))
 TEST_OBJECTS = $(addprefix $(OBJDIR)/, $(TEST_MODULES:=.o))
 ALL_TEST_OBJECTS = $(OBJECTS) $(OBJDIR)/gtest-all.o $(OBJDIR)/gtest_main.o $(TEST_OBJECTS)
@@ -97,7 +93,6 @@ clean :
 	rm -rf $(TARGET) $(TEST_TARGET)
 	rm -rf $(FUSED_GTEST_TMP_DIR)
 	rm -rf $(DOCDIR)/html
-
 
 coefs:
 	python3 scripts/generateHermiteCoefs.py 100 > src/hermiteCoefs.h

@@ -12,5 +12,4 @@
 #include "OrthogonalityChecker.h"
 #include "Saver.h"
 
-
 #endif // !MAIN_H

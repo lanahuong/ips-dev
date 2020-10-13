@@ -25,15 +25,14 @@
  * Used to hold a static function to evaluate Hermite polynomials
  */
 class Hermite {
-public:
-    /**
-     * @brief Iteratively evaluate the Hermite polynomial on a vector
-     * @param nMax max degree to compute
-     * @param zRowvec input vector
-     * @return an matrix where each row corresponds to a degree
-     */
-    static arma::mat computeMatrix(uint nMax, const arma::rowvec &zRowvec);
+ public:
+  /**
+   * @brief Iteratively evaluate the Hermite polynomial on a vector
+   * @param nMax max degree to compute
+   * @param zRowvec input vector
+   * @return an matrix where each row corresponds to a degree
+   */
+  static arma::mat computeMatrix (uint nMax, const arma::rowvec &zRowvec);
 };
-
 
 #endif //PROJET_IPS1_HERMITE_H
