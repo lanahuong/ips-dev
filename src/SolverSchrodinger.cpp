@@ -48,6 +48,7 @@ arma::mat SolverSchrodinger::solve1D(const arma::rowvec &z, uint n) {
  * @param z the vector of z values where function were evaluated
  * @param phi a matrix of functions
  * @return true only if the functions in the matrix \a phi verify the equation
+ * @attention need a matrix of at least 3 columns (for the differentiation)
  */
 bool SolverSchrodinger::test1DSolution(const arma::rowvec &z, arma::mat phi) {
     // Compute second derivative of each function
