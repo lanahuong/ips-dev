@@ -60,8 +60,6 @@ arma::Row<double> inline OrthogonalityChecker::getWeightVector()
 /**
  * Corresponds to the factor 1/sqrt(n!2**n), each time we multiply the previous
  * number by 1/(sqrt 2n) so there's no overflow
- * @param n
- * @return
  */
 void OrthogonalityChecker::initPseudoFactorial()
 {
