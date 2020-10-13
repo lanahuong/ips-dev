@@ -9,7 +9,7 @@
 #include <armadillo>
 
 /**
- * Differentiates twice a matrix
+ * Differentiates twice a matrix 
  * @class Derivator
  */
 class Derivator {
@@ -18,6 +18,7 @@ class Derivator {
   /**
    * @brief Does the second discrete derivative of the matrix by columns, excluding the first one and the last
    * @param m matrix to differentiate
+   * @attention Only works if the matrix has 3 or more columns
    */
   static void differentiateTwice(arma::mat &m);
 
@@ -31,6 +32,7 @@ class Derivator {
   /**
    * @brief If the matrix has 3 or more colums, differentiates it twice then removes the first column and the last since they don't make sense
    * @param m matrix to differentiate
+   * @attention Only works if the matrix has 3 or more columns
    * @return a matrix corresponding to the second discrete derivative of the matrix m
    */
   static arma::mat differentiate(arma::mat m);
