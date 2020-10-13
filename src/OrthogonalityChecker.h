@@ -32,9 +32,13 @@ class OrthogonalityChecker {
 
  private:
   /**
-   * To hold the parameters
+   * @brief To hold the maximum index we're going to test
    */
   uint indexMax;
+
+  /**
+   * @brief To hold the index of the choosen quadrature
+   */
   uint nQuadra;
 
   /**
