@@ -46,32 +46,32 @@ class: toc top
 1. Organisation du projet
 --
 
-  1. Arboresence (Michel)
+  1. Arboresence
 --
 
-  2. Classes (Lana)
+  2. Classes
 --
 
-2. Chaine de compilation (Michel)
+2. Chaine de compilation
 
 --
 
-3. Documentation (Lana)
+3. Documentation
 
 --
 
 4. Extraits de code et tests unitaires
-  1. Code (Gabriel)
-  2. Quadrature (Michel)
-  3. Tests unitaires (Lana)
+  1. Code
+  2. Quadrature
+  3. Tests unitaires
 
 --
 
-5. Git (Gabriel)
+5. Git
 
 --
 
-6. Résultats (Michel)
+6. Résultats
 
 
 ---
@@ -198,16 +198,82 @@ Valeurs pré-calculables indépendantes de `$I_{a, b} $` -> classe instanciée:
 -> Calculs rapides 
 
 
+---
+# 4 - Tests unitaires
+
+GoogleTest
+
+--
+
+Tests paramétrés
+
+--
+
+.numbers[
+```c++
+/**
+ * @struct define the parameter of SolutionBoundedTest
+ */
+struct solution_bounded_state {
+    double zmin;
+    double zmax;
+    uint n;
+    // expected number of rows in the resulting matrix
+    uint length;
+
+    /**
+     * @brief format when printing a solution_bounded_state object
+     */
+    friend std::ostream &operator<<(std::ostream &os, const solution_bounded_state &state)
+    {
+      os << "zmin=" << state.zmin << "; zmax=" << state.zmax;
+      os << "; n=" << state.n << "; length=" << state.length << "}\n";
+      return os;
+    }
+};
+```
+]
 
 ---
 # 4 - Tests unitaires
 
+.numbers[
+```
+/**
+ * @class SolutionBoundedTest
+ * This class defines parameterized tests using instances of solution_bounded_state as parameter
+ */
+class SolutionBoundedTest : public testing::TestWithParam<solution_bounded_state> {
+ public:
+  SolutionBoundedTest()
+  = default;;
+};
 
+/**
+ * @brief Creates an instance of SolutionBoundedTest that will run the given test
+ */
+TEST_P(SolutionBoundedTest, solutionSize)
+{
+  solution_bounded_state state = GetParam();
+  arma::mat result = SolverSchrodinger::solve1D(state.zmin, state.zmax, state.n);
 
+  EXPECT_EQ(state.n + 1, result.n_rows);
+  EXPECT_EQ(state.length, result.n_cols);
+}
+
+/**
+ * Run all SolutionBoundedTest tests with given values
+ */
+INSTANTIATE_TEST_SUITE_P(BasicCases, SolutionBoundedTest, testing::Values(
+    solution_bounded_state{-1, 1, 1, uint((2 / STEP) + 1)},
+    solution_bounded_state{-10, 10, 1, uint((20 / STEP) + 1)},
+    solution_bounded_state{-1, 1, 4, uint((2 / STEP) + 1)}
+));
+```
+]
 
 ---
 # 5 - Git
-
 
 ---
 # 6 - Résultats
