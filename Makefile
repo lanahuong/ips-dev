@@ -70,7 +70,7 @@ ALL_TEST_OBJECTS = $(OBJECTS) $(OBJDIR)/gtest-all.o $(OBJDIR)/gtest_main.o $(TES
 tests : makedirs $(TEST_TARGET)
 
 check : makedirs $(TEST_TARGET)
-	$(TEST_TARGET)
+	$(TEST_TARGET) --gtest_color=yes
 
 #GTEST special objects
 $(FUSED_GTEST_H) :
