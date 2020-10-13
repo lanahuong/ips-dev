@@ -59,7 +59,7 @@ class OrthogonalityChecker {
   arma::rowvec pseudoFactorials;
 
   /**
-   * @brief Holds H_n evaluated on a vector composed of the Gauss-Hermine polynomial's roots
+   * @brief Holds H_n evaluated on a vector composed of the Gauss-Hermite polynomial's roots
    */
   arma::mat hermiteMatrix;
 
