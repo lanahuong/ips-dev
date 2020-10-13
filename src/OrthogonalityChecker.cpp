@@ -3,8 +3,8 @@
 
 /**
  * The maximum value for n and m is bound by the max degree of the polynomial we have
- * @param maxIndex
- * @param nquadra
+ * @param maxIndex the maximum index (n or m) we're going to check
+ * @param nquadra the index of the quadrature we want to use. It defaults to the maximum
  */
 OrthogonalityChecker::OrthogonalityChecker(uint maxIndex, uint nquadra) {
     this->indexMax = maxIndex;
@@ -18,8 +18,8 @@ OrthogonalityChecker::OrthogonalityChecker(uint maxIndex, uint nquadra) {
  * The Hermite polynomial has a degree of n, thus here its n+m
  * If we force n and m to be smalled than the degree of the quadrature
  *  we can ensure that the result is not an approximation
- * @param n
- * @param m
+ * @param n an unsigned int refering to the first function in the scalar product
+ * @param m the same for the second
  * @return nan if the values are out of bound
  */
 double OrthogonalityChecker::checkFor(uint n, uint m) {
@@ -36,13 +36,19 @@ double OrthogonalityChecker::checkFor(uint n, uint m) {
  * Computes the vector that is the Hermite::ComputeMatrix vector
  * The numerator corresponds to the factor that apprears when we change the
  * integration variable.
- * @return
+ * The z are the roots of the hermite polynomial
+ * @return the vector corrected because we change variables in the integral
  */
 arma::rowvec OrthogonalityChecker::getZvector() {
     return (this->hermiteQuadra[this->nQuadra].row(0).as_row()) / (sqrt(MASS * OMEGA / H_BAR));
 }
 
-
+/**
+ * Get the weight from the values previously computed in python and included in the header
+ * hermite_coefs.h
+ * The degree of the quadrature is already stored on the instance.
+ * @return a row of doubles
+ */
 arma::Row<double> inline OrthogonalityChecker::getWeightVector() {
     return this->hermiteQuadra[this->nQuadra].row(1);
 }
