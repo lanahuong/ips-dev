@@ -14,7 +14,8 @@ target_link_libraries(main ${ARMADILLO_LIBRARIES})
 target_compile_options(main ${COMPILE_OPTIONS})
 
 #TESTS
-add_executable(tests src/Hermite.cpp src/OrthogonalityChecker.cpp src/SolverSchrodinger.cpp src/Derivator.cpp tests/testsHermite.cpp tests/testsSolverSchrodinger.cpp tests/testsOrthogonalityChecker.cpp)
+add_executable(tests src/Hermite.cpp src/OrthogonalityChecker.cpp src/SolverSchrodinger.cpp src/Derivator.cpp
+        tests/testsHermite.cpp tests/testsSolverSchrodinger.cpp tests/testsOrthogonalityChecker.cpp tests/testsDerivator.cpp)
 target_link_libraries(tests ${ARMADILLO_LIBRARIES})
 target_compile_options(tests ${COMPILE_OPTIONS})
 target_link_libraries(tests gtest_main)
