@@ -50,17 +50,17 @@ class OrthogonalityChecker {
   void initPseudoFactorial();
 
   /**
-   * Holds the pre computed values
+   * @brief Holds the pre computed values
    */
   arma::rowvec pseudoFactorials;
 
   /**
-   * Holds H_n evaluated on a vector composed of the Gauss-Hermine polynomial's roots
+   * @brief Holds H_n evaluated on a vector composed of the Gauss-Hermine polynomial's roots
    */
   arma::mat hermiteMatrix;
 
   /**
-   * An array of arma::mat. In each matrix the first row corresponds o the
+   * @brief An array of arma::mat. In each matrix the first row corresponds o the
    */
   arma::mat hermiteQuadra[HERM_QUADRA_N_MAX + 1] = HERMITE_QUADRA_COEFS;
 
