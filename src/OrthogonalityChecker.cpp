@@ -5,12 +5,12 @@
  * @param maxIndex the maximum index (n or m) we're going to check
  * @param nquadra the index of the quadrature we want to use. It defaults to the maximum
  */
-OrthogonalityChecker::OrthogonalityChecker (uint maxIndex, uint nquadra)
+OrthogonalityChecker::OrthogonalityChecker(uint maxIndex, uint nquadra)
 {
   this->indexMax = maxIndex;
   this->nQuadra = nquadra < HERM_QUADRA_N_MAX ? nquadra : HERM_QUADRA_N_MAX;
-  this->hermiteMatrix = Hermite::computeMatrix (this->indexMax + 1, getZvector ());
-  this->initPseudoFactorial ();
+  this->hermiteMatrix = Hermite::computeMatrix(this->indexMax + 1, getZvector());
+  this->initPseudoFactorial();
 }
 
 /**
@@ -21,16 +21,16 @@ OrthogonalityChecker::OrthogonalityChecker (uint maxIndex, uint nquadra)
  * @param m the same for the second
  * @return nan if the values are out of bound
  */
-double OrthogonalityChecker::checkFor (uint n, uint m)
+double OrthogonalityChecker::checkFor(uint n, uint m)
 {
   if (unlikely(n > indexMax || m > indexMax || n + m > (2 * nQuadra) - 1))
     {
-      return std::numeric_limits<double>::quiet_NaN ();
+      return std::numeric_limits<double>::quiet_NaN();
     }
   else
     {
-      double constFactor = this->pseudoFactorials.at (n) * this->pseudoFactorials.at (m);
-      return accu (this->getWeightVector () % this->hermiteMatrix.row (m) % this->hermiteMatrix.row (n)) * constFactor;
+      double constFactor = this->pseudoFactorials.at(n) * this->pseudoFactorials.at(m);
+      return accu(this->getWeightVector() % this->hermiteMatrix.row(m) % this->hermiteMatrix.row(n)) * constFactor;
     }
 }
 
@@ -41,9 +41,9 @@ double OrthogonalityChecker::checkFor (uint n, uint m)
  * The z are the roots of the hermite polynomial
  * @return the vector corrected because we change variables in the integral
  */
-arma::rowvec OrthogonalityChecker::getZvector ()
+arma::rowvec OrthogonalityChecker::getZvector()
 {
-  return (this->hermiteQuadra[this->nQuadra].row (0).as_row ()) / (sqrt (MASS * OMEGA / H_BAR));
+  return (this->hermiteQuadra[this->nQuadra].row(0).as_row()) / (sqrt(MASS * OMEGA / H_BAR));
 }
 
 /**
@@ -52,9 +52,9 @@ arma::rowvec OrthogonalityChecker::getZvector ()
  * The degree of the quadrature is already stored on the instance.
  * @return a row of doubles
  */
-arma::Row<double> inline OrthogonalityChecker::getWeightVector ()
+arma::Row<double> inline OrthogonalityChecker::getWeightVector()
 {
-  return this->hermiteQuadra[this->nQuadra].row (1);
+  return this->hermiteQuadra[this->nQuadra].row(1);
 }
 
 /**
@@ -63,12 +63,12 @@ arma::Row<double> inline OrthogonalityChecker::getWeightVector ()
  * @param n
  * @return
  */
-void OrthogonalityChecker::initPseudoFactorial ()
+void OrthogonalityChecker::initPseudoFactorial()
 {
-  this->pseudoFactorials = arma::rowvec (this->indexMax + 1, arma::fill::ones);
+  this->pseudoFactorials = arma::rowvec(this->indexMax + 1, arma::fill::ones);
   for (u_long i = 1; i <= this->indexMax; i++)
     {
-      this->pseudoFactorials.at (i) = this->pseudoFactorials.at (i - 1) * pow (static_cast<double>(2 * i), -0.5);
+      this->pseudoFactorials.at(i) = this->pseudoFactorials.at(i - 1) * pow(static_cast<double>(2 * i), -0.5);
     }
-  this->pseudoFactorials *= pow ((MASS * OMEGA / (PI * H_BAR)), 0.25);
+  this->pseudoFactorials *= pow((MASS * OMEGA / (PI * H_BAR)), 0.25);
 }

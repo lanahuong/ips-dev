@@ -133,8 +133,15 @@ Approche modulaire
 ---
 # 4 - Quadrature
 
-`$$ I_{a, b} = \int \psi_a \psi_b \text{e}^{-\alpha z^2} = \int_{zmin}^{zmax} k_a k_b H_a(z)H_b(z) \text{e}^{-\alpha z^2} \text{d}z  $$`
+On veut vérifier que `$ I_{a, b} = \delta_{a, b} $` avec : 
+`$$ I_{a, b} = \int \psi_a \psi_b \text{e}^{-\alpha z^2} = k_a k_b \int_{z_\text{min}}^{z_\text{max}}  H_a(z)H_b(z) \text{e}^{-\alpha z^2} \text{d}z $$`
+où on a noté `$\alpha = \frac{m \omega}{h}$` et `$k_a = \frac{1}{\sqrt{2^a a!}}{\left(\frac{\alpha}{\pi} \right)}^{\frac{1}{4}} $`. Après un changement de variable (formaliste mais inutile si on prend tous les paramètres égaux à 1 de toutes façons...), on a : 
+`$$ I_{a, b} = k_a k_b \int_{\sqrt{\alpha}z_\text{min}}^{\sqrt{\alpha}z_\text{max}}  H_a(z)H_b(z) \text{e}^{-z^2} \frac{\text{d}z}{\alpha} = k_a k_b \sum_{i = 0}^{N_1} \omega_i  H_a\left(\frac{x_i}{\sqrt{\alpha}} \right)H_b\left(\frac{x_i}{\sqrt{\alpha}} \right)    $$`
 
+Correspondances avec le code : 
+* `$k_n$` = `pseudoFactorials.at(n)`
+* `$\{ H_n\left(\frac{x_i}{\sqrt{\alpha}} \right), \forall i \in    \}$`   = `hermiteMatrix.row(n)`
+* 
 
 ---
 # 4 - Tests unitaires

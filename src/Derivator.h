@@ -19,13 +19,13 @@ class Derivator {
    * @brief Does the second discrete derivative of the matrix by columns, excluding the first one and the last
    * @param m matrix to differentiate
    */
-  static void differentiateTwice (arma::mat &m);
+  static void differentiateTwice(arma::mat &m);
 
   /**
    * @brief If the matrix has 3 or more columns, removes the first one and the last
    * @param m matrix to correct
    */
-  static void correctBounds (arma::mat &m);
+  static void correctBounds(arma::mat &m);
 
  public :
   /**
@@ -33,7 +33,7 @@ class Derivator {
    * @param m matrix to differentiate
    * @return a matrix corresponding to the second discrete derivative of the matrix m
    */
-  static arma::mat differentiate (arma::mat m);
+  static arma::mat differentiate(arma::mat m);
 
 };
 
