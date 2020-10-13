@@ -38,8 +38,7 @@ struct solution_check {
  */
 class SolutionTest : public testing::TestWithParam<solution_check> {
  public:
-  SolutionTest ()
-  {};
+  SolutionTest () = default;;
 };
 
 /**
@@ -49,7 +48,8 @@ TEST_P(SolutionTest, solutionSize)
 {
   solution_check state = GetParam ();
   arma::mat result = SolverSchrodinger::solve1D (state.zmin, state.zmax, state.n);
-
+  arma::rowvec z = arma::regspace (state.zmin, STEP, state.zmax).as_row ();
+  EXPECT_TRUE(SolverSchrodinger::test1DSolution (z, result));
   EXPECT_EQ(state.n + 1, result.n_rows);
   EXPECT_EQ(state.length, result.n_cols);
 }
