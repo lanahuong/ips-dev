@@ -1,7 +1,7 @@
 #Modules to consider in the build. foo.cpp will be foo.
 MODULES = Hermite SolverSchrodinger Derivator OrthogonalityChecker Saver
 MAIN = main
-TEST_MODULES = testsHermite testsSolverSchrodinger testsOrthogonalityChecker
+TEST_MODULES = testsHermite testsSolverSchrodinger testsOrthogonalityChecker testsDerivator
 
 #Compiler config for the main target
 CC = g++ -std=c++11
