@@ -12,9 +12,9 @@
 #include "../src/constants.h"
 
 /**
- * @struct define the parameter of SolutionTest
+ * @struct define the parameter of SolutionBoundedTest
  */
-struct solution_check {
+struct solution_bounded_state {
     double zmin;
     double zmax;
     uint n;
@@ -22,9 +22,9 @@ struct solution_check {
     uint length;
 
     /**
-     * @brief format when printing a solution_check object
+     * @brief format when printing a solution_bounded_state object
      */
-    friend std::ostream &operator<<(std::ostream &os, const solution_check &state) {
+    friend std::ostream &operator<<(std::ostream &os, const solution_bounded_state &state) {
         os << "; zmin=" << state.zmin << "; zmax=" << state.zmax;
         os << "; n=" << state.n << "; length=" << state.length << "}\n";
         return os;
@@ -32,19 +32,19 @@ struct solution_check {
 };
 
 /**
- * @class SolutionTest
- * This class defines parameterized tests using instances of solution_check as parameter
+ * @class SolutionBoundedTest
+ * This class defines parameterized tests using instances of solution_bounded_state as parameter
  */
-class SolutionTest : public testing::TestWithParam<solution_check> {
+class SolutionBoundedTest : public testing::TestWithParam<solution_bounded_state> {
 public:
-    SolutionTest() {};
+    SolutionBoundedTest() {};
 };
 
 /**
- * @brief Creates an instance of SolutionTest that will run the given test
+ * @brief Creates an instance of SolutionBoundedTest that will run the given test
  */
-TEST_P(SolutionTest, solutionSize) {
-    solution_check state = GetParam();
+TEST_P(SolutionBoundedTest, solutionSize) {
+    solution_bounded_state state = GetParam();
     arma::mat result = SolverSchrodinger::solve1D(state.zmin, state.zmax, state.n);
 
     EXPECT_EQ(state.n + 1, result.n_rows);
@@ -52,10 +52,10 @@ TEST_P(SolutionTest, solutionSize) {
 }
 
 /**
- * Run all SolutionTest tests with given values
+ * Run all SolutionBoundedTest tests with given values
  */
-INSTANTIATE_TEST_SUITE_P(BasicCases, SolutionTest, testing::Values(
-        solution_check{-1, 1, 1, uint((2 / STEP) + 1)},
-        solution_check{-10, 10, 1, uint((20 / STEP) + 1)},
-        solution_check{-1, 1, 4, uint((2 / STEP) + 1)}
+INSTANTIATE_TEST_SUITE_P(BasicCases, SolutionBoundedTest, testing::Values(
+        solution_bounded_state{-1, 1, 1, uint((2 / STEP) + 1)},
+        solution_bounded_state{-10, 10, 1, uint((20 / STEP) + 1)},
+        solution_bounded_state{-1, 1, 4, uint((2 / STEP) + 1)}
 ));
